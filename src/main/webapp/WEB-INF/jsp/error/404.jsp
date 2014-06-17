@@ -13,7 +13,7 @@
     <table style="height: 100%; width: 600px; text-align: center;">
         <tr>
             <td>
-                <%= exception.getMessage()%>
+                文件不存在！
                 <a href="javascript:history.go(-1);">返回</a>!!!
             </td>
         </tr>

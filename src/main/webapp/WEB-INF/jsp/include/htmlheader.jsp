@@ -25,5 +25,5 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <link href="css/bootstrap.min.css" rel="stylesheet">
 
 <!--[if lt IE 8]>
-<link href="/css/bootstrap-ie7.css" rel="stylesheet">
+<link href="css/bootstrap-ie7.css" rel="stylesheet">
 <![endif]-->
