@@ -20,9 +20,9 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 -->
 
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-<script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js" />
-<script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-<link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+<script src="/js/jquery-1.11.1.min.js" />
+<script src="/js/bootstrap.min.js"></script>
+<link href="/css/bootstrap.min.css" rel="stylesheet">
 
 <!--[if lt IE 8]>
 <link href="/css/bootstrap-ie7.css" rel="stylesheet">
