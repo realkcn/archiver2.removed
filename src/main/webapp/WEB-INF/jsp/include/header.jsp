@@ -17,7 +17,7 @@
                 <span class="icon-bar"></span>
             </button>
             <ul class="nav navbar-nav">
-            <a class="navbar-brand" href="http://www.newsmth.net">水木社区主站</a>
+                <li class="active"><a class="navbar-brand" href="http://www.newsmth.net">水木社区主站</a></li>
                 <li><a href="${request.docbase}">归档站首页</a></li>
                 <li><a href="${request.docbase}boards.html">版面列表</a></li>
                 <li><a href="${request.docbase}search.jsp">搜索</a></li>
@@ -52,11 +52,11 @@
         <!--/.nav-collapse -->
     </div>
 </div>
-<c:if test="#request.nobreadcrumbs==null">
+<c:if test="${requestScope.nobreadcrumbs==null}">
     <div class="container">
         <ul class="breadcrumb">
             <a href="${request.docbase}">首页</a> <span class="divider">/</span>
-            <c:if test="board!=null">
+            <c:if test="${requestScope.board}!=null">
                 <a href="${request.docbase}boards.html">版面列表</a> <span class="divider">/</span>
                 <a href="${request.docbase}board-${board.boardid}.html">${board.cname}</a> <span
                     class="divider">/</span>

@@ -22,7 +22,7 @@
 <body onLoad='document.getElementById("boardsearch").focus()'>
 <c:set var="pagedetail" value="'版面列表'" scope="request"/>
 <jsp:include page="include/header.jsp"/>
-<div class="container-fluid">
+<div class="container">
     <div class="table-responsive">
         <table class="table table-striped">
             <c:forEach var="board" items="${boards}">
