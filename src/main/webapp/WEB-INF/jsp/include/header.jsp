@@ -5,7 +5,7 @@
 <%@ page import="org.apache.commons.lang3.StringUtils" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:if test="${requestScope.docbase==null}">
-    <c:set var="docbase" value="'./'" scope="request"/>
+    <c:set var="docbase" value="./" scope="request"/>
 </c:if>
 <div class="navbar navbar-inverse" role="navigation">
     <div class="container">
