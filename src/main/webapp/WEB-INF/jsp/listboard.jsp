@@ -20,7 +20,7 @@
     <title>水木社区归档站 - 版面列表</title>
 </head>
 <body onLoad='document.getElementById("boardsearch").focus()'>
-<c:set var="pagedetail" value="'版面列表'" scope="request"/>
+<c:set var="pagedetail" value="版面列表" scope="request"/>
 <jsp:include page="include/header.jsp"/>
 <div class="container">
     <div class="table-responsive">

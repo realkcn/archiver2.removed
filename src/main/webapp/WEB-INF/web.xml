@@ -5,10 +5,7 @@
 <web-app id="WebApp_ID" version="2.4"
          xmlns="http://java.sun.com/xml/ns/j2ee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
-
-http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
-
+         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
     <display-name>NewSMTH Archiver</display-name>
 
     <servlet>
@@ -37,19 +34,7 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
     <error-page>
-        <error-code>403</error-code>
-        <location>/WEB-INF/jsp/error/403.jsp</location>
-    </error-page>
-    <error-page>
         <error-code>404</error-code>
         <location>/WEB-INF/jsp/error/404.jsp</location>
-    </error-page>
-    <error-page>
-        <error-code>405</error-code>
-        <location>/WEB-INF/jsp/error/405.jsp</location>
-    </error-page>
-    <error-page>
-        <error-code>500</error-code>
-        <location>/WEB-INF/jsp/error/500.jsp</location>
     </error-page>
 </web-app>

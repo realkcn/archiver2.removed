@@ -4,10 +4,10 @@
 <%@ page import="org.apache.commons.lang3.StringEscapeUtils" %>
 <%@ page import="org.apache.commons.lang3.StringUtils" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:if test="#request.docbase==null">
+<c:if test="${requestScope.docbase==null}">
     <c:set var="docbase" value="'./'" scope="request"/>
 </c:if>
-<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<div class="navbar navbar-inverse navbar-fixed-top row" role="navigation">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -16,11 +16,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
+        </div>
+        <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li class="active"><a class="navbar-brand" href="http://www.newsmth.net">水木社区主站</a></li>
-                <li><a href="${request.docbase}">归档站首页</a></li>
-                <li><a href="${request.docbase}boards.html">版面列表</a></li>
-                <li><a href="${request.docbase}search.jsp">搜索</a></li>
+                <li><a href="${requestScope.docbase}">归档站首页</a></li>
+                <li><a href="${requestScope.docbase}boards.html">版面列表</a></li>
+                <li><a href="${requestScope.docbase}search.jsp">搜索</a></li>
                 <li>
                     <%
                         AttributePrincipal principal = SSOFilter.getPrincipal(request);
@@ -32,16 +34,14 @@
                     else
                         out.print("无名氏");
                 %>，你好&nbsp;|</a></li>
-                <li class="active"><a href="${request.docbase}user/logout.jsp">注销</a>
+                <li class="active"><a href="${requestScope.docbase}user/logout.jsp">注销</a>
                     <%
                     } else {
                     %>
-                    <a href="${request.docbase}user/login.jsp">登录</a>
+                    <a href="${requestScope.docbase}user/login.jsp">登录</a>
                     <% } %>
                 </li>
             </ul>
-        </div>
-        <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
                 <form class="navbar-form navbar-right" action="${request.docbase}searchArticle.do" method="GET">
                     <input class="search" placeholder="" id="search_input" type="text" value="" name="body"/>
@@ -53,18 +53,17 @@
     </div>
 </div>
 <c:if test="${requestScope.nobreadcrumbs==null}">
-    <div class="container">
-        <ul class="breadcrumb">
-            <a href="${request.docbase}">首页</a> <span class="divider">/</span>
-            <c:if test="${requestScope.board}!=null">
-                <a href="${requestScope.docbase}boards.html">版面列表</a> <span class="divider">/</span>
-                <a href="${requestScope.docbase}board-${board.boardid}.html">${board.cname}</a> <span
-                    class="divider">/</span>
-            </c:if>
-                ${requestScope.pagedetail}
-                <c:if test="board!=null"><a style="float: right"
-                                            href="http://www.newsmth.net/nForum/board/${board.name}" target="_blank">回主站[${board.cname}]版</a>
-            </c:if>
-        </ul>
-    </div>
+<div class="container">
+    <ol class="breadcrumb">
+        <li><a href="${requestScope.docbase}">首页</a></li>
+        <c:if test="${requestScope.board}!=null">
+        <li><a href="${requestScope.docbase}boards.html">版面列表</a></li>
+        <li><a href="${requestScope.docbase}board-${board.boardid}.html">${board.cname}</a></li>
+        </c:if>
+        <li class="active">${requestScope.pagedetail}</li>
+            <c:if test="board!=null"><a style="float: right"
+                                        href="http://www.newsmth.net/nForum/board/${board.name}" target="_blank">回主站[${board.cname}]版</a>
+        </c:if>
+    </ol>
+</div>
 </c:if>
