@@ -40,10 +40,24 @@ public class BoardDAOTest {
     {
       String boardname="test";
       cacheUtils.setCache("boardCache");
+      cacheUtils.removeAll();
+
+      assertEquals(cacheUtils.getStatistics().getSize(),0);
       Board board=boardDAO.select(boardname);
       assertEquals(board.getName(),"Test");
       cacheUtils.saveStat();
+      assertEquals(cacheUtils.getStatistics().getSize(),1);
       boardDAO.select(boardname);
+      assertEquals(cacheUtils.getStatistics().getSize(),1);
+      assertEquals(cacheUtils.getStatistics().getHitCount(),cacheUtils.getSaveStatistics().getHitCount()+1);
+
+      long boardid=305;
+      board=boardDAO.selectById(boardid);
+      assertEquals(board.getName(),"Announce");
+      assertEquals(cacheUtils.getStatistics().getSize(),2);
+      cacheUtils.saveStat();
+      boardDAO.selectById(boardid);
+      assertEquals(cacheUtils.getStatistics().getSize(),2);
       assertEquals(cacheUtils.getStatistics().getHitCount(),cacheUtils.getSaveStatistics().getHitCount()+1);
     }
     catch (Exception e)

@@ -17,7 +17,7 @@ public class BoardController {
   private BoardDAO boardDAO;
 
 
-  @RequestMapping("/listboard.do")
+  @RequestMapping("/a/listboard.do")
   public String getAll(Model model) {
 
     model.addAttribute("boards",boardDAO.selectAll());

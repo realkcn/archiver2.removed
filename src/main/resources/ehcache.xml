@@ -5,7 +5,7 @@
     <diskStore path="java.io.tmpdir"/>
     <defaultCache overflowToDisk="false" eternal="false" maxElementsInMemory="1" />
     <cache name="boardCache" statistics="true"
-           maxElementsInMemory="300"
+           maxElementsInMemory="3000"
            eternal="false"
            timeToIdleSeconds="500"
            timeToLiveSeconds="500"

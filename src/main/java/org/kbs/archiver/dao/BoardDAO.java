@@ -24,4 +24,8 @@ public interface BoardDAO {
   @Cacheable(value="boardCache",key="#p0")
   @Select("Select * From board Where name=#{name}")
   public Board select(@Param("name")String name);
+
+  @Cacheable(value="boardCache",key="#p0")
+  @Select("Select * From board Where boardid=#{boardid}")
+  public Board selectById(@Param("boardid")long boardid);
 }

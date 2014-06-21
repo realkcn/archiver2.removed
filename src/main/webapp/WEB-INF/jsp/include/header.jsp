@@ -4,9 +4,6 @@
 <%@ page import="org.apache.commons.lang3.StringEscapeUtils" %>
 <%@ page import="org.apache.commons.lang3.StringUtils" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:if test="${requestScope.docbase==null}">
-    <c:set var="docbase" value="./" scope="request"/>
-</c:if>
 <div class="navbar navbar-inverse" role="navigation">
     <div class="container">
         <div class="navbar-header">
@@ -20,9 +17,9 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li class="active"><a class="navbar-brand" href="http://www.newsmth.net">水木社区主站</a></li>
-                <li><a href="${requestScope.docbase}">归档站首页</a></li>
-                <li><a href="${requestScope.docbase}boards.html">版面列表</a></li>
-                <li><a href="${requestScope.docbase}search.jsp">搜索</a></li>
+                <li><a href="${docbase}">归档站首页</a></li>
+                <li><a href="${docbase}boards.html">版面列表</a></li>
+                <li><a href="${docbase}search.jsp">搜索</a></li>
                 <li>
                     <%
                         AttributePrincipal principal = SSOFilter.getPrincipal(request);
@@ -34,16 +31,16 @@
                     else
                         out.print("无名氏");
                 %>，你好&nbsp;|</a></li>
-                <li class="active"><a href="${requestScope.docbase}user/logout.jsp">注销</a>
+                <li class="active"><a href="${docbase}user/logout.jsp">注销</a>
                     <%
                     } else {
                     %>
-                    <a href="${requestScope.docbase}user/login.jsp">登录</a>
+                    <a href="${docbase}user/login.jsp">登录</a>
                     <% } %>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <form class="navbar-form navbar-right" action="${request.docbase}searchArticle.do" method="GET">
+                <form class="navbar-form navbar-right" action="${docbase}searchArticle.do" method="GET">
                     <input class="search" placeholder="" id="search_input" type="text" value="" name="body"/>
                     <input class="btn" type="submit" value="搜索"/></form>
                 </form>
@@ -55,10 +52,10 @@
 <c:if test="${requestScope.nobreadcrumbs==null}">
 <div class="container">
     <ol class="breadcrumb">
-        <li><a href="${requestScope.docbase}">首页</a></li>
-        <c:if test="${requestScope.board}!=null">
-        <li><a href="${requestScope.docbase}boards.html">版面列表</a></li>
-        <li><a href="${requestScope.docbase}board-${board.boardid}.html">${board.cname}</a></li>
+        <li><a href="${docbase}">首页</a></li>
+        <c:if test="${board}!=null">
+        <li><a href="${docbase}boards.html">版面列表</a></li>
+        <li><a href="${docbase}board-${board.boardid}.html">${board.cname}</a></li>
         </c:if>
         <li class="active">${requestScope.pagedetail}</li>
             <c:if test="board!=null"><a style="float: right"

@@ -37,10 +37,9 @@ public class BoardControllerTest {
   @Test
   public void testGetAll() throws Exception {
     MvcResult result = mockMvc.perform(
-            MockMvcRequestBuilders.get("/listboard.do"))
+            MockMvcRequestBuilders.get("/a/listboard.do"))
       .andExpect(MockMvcResultMatchers.view().name("listboard"))
       .andExpect(MockMvcResultMatchers.model().attributeExists("boards"))
-      .andDo(MockMvcResultHandlers.print())
       .andReturn();
     Assert.assertNotNull(result.getModelAndView().getModel().get("boards"));
   }

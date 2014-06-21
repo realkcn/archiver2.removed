@@ -14,6 +14,7 @@ public class CacheStatistics {
   private long putCount;
   private long removeCount;
   private long putUpdatedCount;
+  private long size;
 
   public CacheStatistics(StatisticsGateway statistics) {
     hitCount=statistics.cacheHitCount();
@@ -24,7 +25,12 @@ public class CacheStatistics {
     putCount=statistics.cachePutCount();
     removeCount=statistics.cacheRemoveCount();
     putUpdatedCount=statistics.cachePutUpdatedCount();
+    size=statistics.getSize();
   }
+
+
+  public long getSize() { return size; }
+
   public long getHitCount() {
     return hitCount;
   }
