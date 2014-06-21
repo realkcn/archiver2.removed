@@ -5,17 +5,23 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.scripting.defaults.RawLanguageDriver;
 import org.kbs.archiver.model.Board;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 
 import java.util.List;
 
 /**
  * Created by kcn on 14-6-17.
  */
+
+@EnableCaching
 public interface BoardDAO {
   @Lang(RawLanguageDriver.class)
   @Select("SELECT * FROM Board")
-  List<Board> selectAll();
+  @Cacheable("boardCache")
+  public List<Board> selectAll();
 
-  @Select("Select * From board Where boardid=#{boardid}")
-  Board select(@Param("boardid")String id);
+  @Cacheable(value="boardCache",key="#p0")
+  @Select("Select * From board Where name=#{name}")
+  public Board select(@Param("name")String name);
 }
