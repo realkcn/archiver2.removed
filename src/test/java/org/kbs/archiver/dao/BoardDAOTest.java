@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kbs.archiver.model.Board;
-import org.kbs.archiver.utils.CacheUtils;
+import org.kbs.archiver.cache.CacheUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -30,7 +30,7 @@ public class BoardDAOTest {
   @Test
   public void testCacheSelectAllDao()
   {
-    assertEquals(boardDAO.selectAll().size(),2);
+    assertEquals(boardDAO.selectAll().size(), 2);
   }
 
   @Test
@@ -42,22 +42,34 @@ public class BoardDAOTest {
       cacheUtils.setCache("boardCache");
       cacheUtils.removeAll();
 
-      assertEquals(cacheUtils.getStatistics().getSize(),0);
-      Board board=boardDAO.select(boardname);
+      //miss cache
+      cacheUtils.saveStat();
+      assertNull(boardDAO.selectByName("failddd"));
+      assertEquals(cacheUtils.getStatistics().getMissCount(), cacheUtils.getSaveStatistics().getMissCount()+1);
+
+      //test hit null cache
+      cacheUtils.saveStat();
+      assertNull(boardDAO.selectByName("failddd"));
+      assertEquals(cacheUtils.getStatistics().getHitCount(),cacheUtils.getSaveStatistics().getHitCount()+1);
+      assertEquals(cacheUtils.getStatistics().getSize(),1);
+
+      //test get board by name
+      Board board=boardDAO.selectByName(boardname);
       assertEquals(board.getName(),"Test");
       cacheUtils.saveStat();
-      assertEquals(cacheUtils.getStatistics().getSize(),1);
-      boardDAO.select(boardname);
-      assertEquals(cacheUtils.getStatistics().getSize(),1);
+      assertEquals(cacheUtils.getStatistics().getSize(), 2);
+      boardDAO.selectByName(boardname);
+      assertEquals(cacheUtils.getStatistics().getSize(), 2);
       assertEquals(cacheUtils.getStatistics().getHitCount(),cacheUtils.getSaveStatistics().getHitCount()+1);
 
+      //test get board by id
       long boardid=305;
       board=boardDAO.selectById(boardid);
       assertEquals(board.getName(),"Announce");
-      assertEquals(cacheUtils.getStatistics().getSize(),2);
+      assertEquals(cacheUtils.getStatistics().getSize(),3);
       cacheUtils.saveStat();
       boardDAO.selectById(boardid);
-      assertEquals(cacheUtils.getStatistics().getSize(),2);
+      assertEquals(cacheUtils.getStatistics().getSize(), 3);
       assertEquals(cacheUtils.getStatistics().getHitCount(),cacheUtils.getSaveStatistics().getHitCount()+1);
     }
     catch (Exception e)

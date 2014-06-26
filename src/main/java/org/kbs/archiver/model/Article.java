@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Created by kcn on 14-6-17.
  */
-public class Article {
+public class Article implements ModelHasID {
   private long boardid;
   private long threadid;
   private long articleid;
@@ -122,5 +122,10 @@ public class Article {
 
   public void setBoardname(String boardname) {
     this.boardname = boardname;
+  }
+
+  @Override
+  public long getId() {
+    return getArticleid();
   }
 }

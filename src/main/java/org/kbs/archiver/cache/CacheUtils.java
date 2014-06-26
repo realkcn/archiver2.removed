@@ -1,4 +1,4 @@
-package org.kbs.archiver.utils;
+package org.kbs.archiver.cache;
 
 import net.sf.ehcache.Ehcache;
 import org.springframework.cache.ehcache.EhCacheCache;

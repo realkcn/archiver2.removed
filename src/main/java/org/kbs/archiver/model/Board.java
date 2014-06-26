@@ -5,7 +5,7 @@ package org.kbs.archiver.model;
  */
 
 
-public class Board {
+public class Board implements ModelHasID {
   private long boardid;
   private String name;
   private int threads;
@@ -104,5 +104,10 @@ public class Board {
 
   public void setLastdeleteid(long lastdeleteid) {
     this.lastdeleteid = lastdeleteid;
+  }
+
+  @Override
+  public long getId() {
+    return getBoardid();
   }
 }
