@@ -4,6 +4,8 @@ import org.kbs.archiver.model.ModelHasID;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 
+import java.util.List;
+
 /**
  * Created by kcn on 14-6-26.
  */
@@ -24,6 +26,19 @@ public class IdBaseCache<T extends ModelHasID>  {
   public Cache getCache() {
     return cache;
   }
+
+  public void putAll(List<T> objects) {
+    clear();
+    for (T obj:objects) {
+      put(obj);
+    }
+  }
+/*
+
+  public List<T> getAll() {
+    return cache.
+  }
+*/
 
   public void setCache(Cache cache) {
     this.cache = cache;

@@ -34,6 +34,25 @@ public class BoardDAOTest {
   }
 
   @Test
+  public void testUpdate() {
+    cacheUtils.setCache("boardCache");
+    cacheUtils.removeAll();
+
+    String boardname="test";
+    Board oldboard=boardDAO.selectByName(boardname);
+    Board newboard1=new Board(oldboard);
+    newboard1.setArticles(oldboard.getArticles()+1);
+    boardDAO.update(newboard1);
+
+    Board newboard=boardDAO.selectByName(boardname);
+    assertEquals(oldboard.getArticles()+1,newboard.getArticles());
+    boardDAO.update(oldboard);
+
+    newboard=boardDAO.selectByName(boardname);
+    assertEquals(oldboard.getArticles(),newboard.getArticles());
+  }
+
+  @Test
   public void testCacheSelectDao()
   {
     try

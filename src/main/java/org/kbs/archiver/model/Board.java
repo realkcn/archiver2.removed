@@ -18,6 +18,24 @@ public class Board implements ModelHasID {
   private boolean ignored;
   private long lastdeleteid;
 
+  public Board() {
+
+  }
+
+  public Board(Board template) {
+    boardid=template.boardid;
+    name=template.name;
+    threads=template.threads;
+    articles=template.articles;
+    ishidden=template.ishidden;
+    lastarticleid=template.lastarticleid;
+    cname=template.cname;
+    groupid=template.groupid;
+    section=template.section;
+    ignored=template.ignored;
+    lastdeleteid=template.lastdeleteid;
+  }
+
   public long getBoardid() {
     return boardid;
   }

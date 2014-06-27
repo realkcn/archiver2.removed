@@ -22,4 +22,6 @@
           p:configLocation="classpath:ehcache.xml" p:shared="true"/>
     <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager"
           p:cacheManager-ref="cacheManagerFactory" />
+
+
 </beans>

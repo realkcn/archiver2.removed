@@ -8,6 +8,7 @@ import org.apache.ibatis.scripting.defaults.RawLanguageDriver;
 import org.kbs.archiver.model.Board;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.cache.annotation.EnableCaching;
 
 import java.util.List;
@@ -37,6 +38,7 @@ public interface BoardDAO {
   @Select("Select * From board Where boardid=#{boardid}")
   public Board selectById(@Param("boardid")long boardid);
 
-//  @Update("update board set name=#{name},cname=#{cname},threads=#{threads},articles=#{articles},ishidden=#{ishidden},groupid=#{groupid},section=#{section},ignored=#{ignored} where boardid=#{boardid}")
-//  public void update(Board board);
+  @Caching(evict = { @CacheEvict(value="boardCache",key="#p0.boardid"),@CacheEvict(value="boardCache",key="#p0.name")})
+  @Update("update board set name=#{name},cname=#{cname},threads=#{threads},articles=#{articles},ishidden=#{ishidden},groupid=#{groupid},section=#{section},ignored=#{ignored} where boardid=#{boardid}")
+  public void update(Board board);
 }
