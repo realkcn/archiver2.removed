@@ -41,4 +41,7 @@ public interface BoardDAO {
   @Caching(evict = { @CacheEvict(value="boardCache",key="#p0.boardid"),@CacheEvict(value="boardCache",key="#p0.name")})
   @Update("update board set name=#{name},cname=#{cname},threads=#{threads},articles=#{articles},ishidden=#{ishidden},groupid=#{groupid},section=#{section},ignored=#{ignored} where boardid=#{boardid}")
   public void update(Board board);
+
+  @CacheEvict(value = "boardCache",allEntries = true)
+  public void clearCache();
 }
