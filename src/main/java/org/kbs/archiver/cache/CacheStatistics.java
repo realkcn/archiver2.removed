@@ -16,6 +16,49 @@ public class CacheStatistics {
   private long putUpdatedCount;
   private long size;
 
+  public CacheStatistics() {
+    hitCount=0;
+    evictedCount=0;
+    expiredCount=0;
+    missCount=0;
+    missExpiredCount=0;
+    putCount=0;
+    removeCount=0;
+    putUpdatedCount=0;
+    size=0;
+  }
+  public synchronized void incHitCount() {
+    hitCount++;
+  }
+
+  public synchronized void incEvictedCount() {
+    evictedCount++;
+  }
+
+  public synchronized void incExpiredCount() {
+    expiredCount++;
+  }
+
+  public synchronized void incMissCount() {
+    missCount++;
+  }
+
+  public synchronized void incMissExpiredCount() {
+    missExpiredCount++;
+  }
+
+  public synchronized void incputCount() {
+    putCount++;
+  }
+
+  public synchronized void incputUpdatedCount() {
+    putUpdatedCount++;
+  }
+
+  public synchronized void setSize(long size) {
+    this.size=size;
+  }
+
   public CacheStatistics(StatisticsGateway statistics) {
     hitCount=statistics.cacheHitCount();
     evictedCount=statistics.cacheEvictedCount();

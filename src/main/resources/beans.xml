@@ -59,8 +59,17 @@
         <property name="dataSource" ref="dataSource" />
         <property name="configLocation" value="classpath:mybatis.xml" />
     </bean>
-    <bean id="boardDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+    <bean id="boardDBDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="mapperInterface" value="org.kbs.archiver.dao.BoardDAO" />
         <property name="sqlSessionFactory" ref="sqlSessionFactory" />
     </bean>
+
+    <!--
+        declare timer bean
+    -->
+    <bean id="boardCacheExpireJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="boardDAO" />
+        <property name="targetMethod" value="expireAll" />
+    </bean>
+
 </beans>
