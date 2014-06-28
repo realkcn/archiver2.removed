@@ -23,7 +23,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
     <c:set var="docbase" value="../" scope="request"/>
 </c:if>
 
-<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <script src="${docbase}js/jquery-1.11.1.min.js" />
 <script src="${docbase}js/bootstrap.min.js"></script>

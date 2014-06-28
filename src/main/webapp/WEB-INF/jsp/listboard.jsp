@@ -3,11 +3,10 @@
 <%@ page import="java.util.Date" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" pageEncoding="UTF-8" session="false" %>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <html>
 <head>
-
-
+    <jsp:include page="include/htmlheader.jsp"/>
     <meta http-equiv="cache-control" content="max-age=120;">
     <meta http-equiv="expires" content="<%
     SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'"); //use iso8601 time format.....maybe change to rfc2616?
@@ -15,8 +14,6 @@
     out.print(format.format(new Date(System.currentTimeMillis()+1000*120)));
 %>">
     <meta http-equiv="description" content="水木社区版面列表">
-
-    <jsp:include page="include/htmlheader.jsp"/>
     <link rel="stylesheet" type="text/css" href="${docbase}css/jquery-ui-1.10.4.custom.min.css" />
     <script type="text/javascript" src="${docbase}js/jquery-ui-1.10.4.custom.min.js"></script>
     <title>水木社区归档站 - 版面列表</title>
@@ -31,13 +28,15 @@
     </div>
 
     <section class="table-responsive" >
-        <table class="table table-striped table-bordered">
+        <table class="table table-striped table-bordered table-hover">
             <thead>
-                <td>序号</td>
-                <td>英文名</td>
-                <td>中文名</td>
-                <td>主题数</td>
-                <td>文章数</td>
+            <tr>
+                <th>序号</th>
+                <th>英文名</th>
+                <th>中文名</th>
+                <th>主题数</th>
+                <th>文章数</th>
+            </tr>
             </thead>
             <tbody>
             <c:set var="boardarray" value=""/>
