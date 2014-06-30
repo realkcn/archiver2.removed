@@ -27,7 +27,7 @@ public class PagesTag extends PagerSupport implements BodyTag {
 
 	@Override
 	public void doInitBody() throws JspException {
-		pageContext.getRequest().setAttribute(PAGE_NUMBER, new Integer(page));
+		pageContext.getRequest().setAttribute(PAGE_NUMBER, page);
 		page++;
 	}
 
