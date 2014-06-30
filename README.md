@@ -1,6 +1,7 @@
 archiver2
 =========
-  The archiver for http://newsmth.net .
+  The archiver for http://newsmth.net.
+
 Database:
   Use docs/create.sql to create mysql database for archiver and add a user have full access on it.
   
