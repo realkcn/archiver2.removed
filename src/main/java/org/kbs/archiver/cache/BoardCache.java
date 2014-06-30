@@ -20,10 +20,18 @@ import java.util.List;
 public class BoardCache implements BoardDAO {
   private static final Logger LOG = LoggerFactory.getLogger(BoardCache.class);
 
+  /**
+   * Get Board database DAO
+   * @return Board database DAO
+   */
   public BoardDAO getDBDAO() {
     return dbDAO;
   }
 
+  /**
+   * Set Board database DAO
+   * @param dbDAO Board database DAO
+   */
   public void setDBDAO(BoardDAO dbDAO) {
     this.dbDAO = dbDAO;
   }
@@ -36,21 +44,37 @@ public class BoardCache implements BoardDAO {
   private HashMap<Long,Board> idMap=new HashMap<>();
   private HashMap<String,Board> nameMap=new HashMap<>();
 
+
+  /**
+   * Get statistics of cache
+   * @return CacheStatistics
+   */
   public CacheStatistics getStatistics() {
     return statistics;
   }
 
+
+  /**
+   * set statistics of cache
+   * @param statistics staticstics should be used
+   */
   public void setStatistics(CacheStatistics statistics) {
     this.statistics = statistics;
   }
 
   private CacheStatistics statistics=new CacheStatistics();
 
+  /**
+   * clear all cache and reload
+   */
   public void expireAll() {
     caching=false;
     initCache();
   }
 
+  /**
+   * load board cache
+   */
   public void initCache() {
     synchronized (BoardCache.class) {
       if (!caching) {
@@ -75,7 +99,7 @@ public class BoardCache implements BoardDAO {
       }
     }
   }
-  /*
+  /**
    *
    * @return List of boards
    */
@@ -87,6 +111,9 @@ public class BoardCache implements BoardDAO {
     return boards;
   }
 
+  /**
+   * @return List of visible boards
+   */
   @Override
   public List<Board> selectAllVisible() {
     if (!caching)
@@ -94,6 +121,11 @@ public class BoardCache implements BoardDAO {
     return visibleboardlist;
   }
 
+  /**
+   * Get the board by board's name.
+   * @param name board's name
+   * @return board
+   */
   @Override
   public Board selectByName(String name) {
     if (!caching) {
@@ -108,6 +140,11 @@ public class BoardCache implements BoardDAO {
     return board;
   }
 
+  /**
+   * Get the board by board's id.
+   * @param boardid board's id
+   * @return board
+   */
   @Override
   public Board selectById(long boardid) {
     if (!caching) {
@@ -122,6 +159,10 @@ public class BoardCache implements BoardDAO {
     return board;
   }
 
+  /**
+   * Update the information of board
+   * @param board the board should be updated.
+   */
   @Override
   public void update(Board board) {
     LOG.debug("update board"+ToStringBuilder.reflectionToString(board));

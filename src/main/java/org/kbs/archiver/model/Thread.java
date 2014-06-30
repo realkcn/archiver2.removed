@@ -7,7 +7,7 @@ import java.util.Date;
 /**
  * Created by kcn on 14-6-17.
  */
-public class Thread {
+public class Thread implements ModelHasID {
   private long boardid;
   private String subject;
   private Date posttime;
@@ -122,5 +122,13 @@ public class Thread {
 
   public void setIsvisible(boolean isvisible) {
     this.isvisible = isvisible;
+  }
+
+  /**
+   * @return thread id
+   */
+  @Override
+  public long getId() {
+    return getThreadid();
   }
 }

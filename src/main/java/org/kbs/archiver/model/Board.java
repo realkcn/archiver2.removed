@@ -124,6 +124,9 @@ public class Board implements ModelHasID {
     this.lastdeleteid = lastdeleteid;
   }
 
+  /**
+   * @return board id
+   */
   @Override
   public long getId() {
     return getBoardid();

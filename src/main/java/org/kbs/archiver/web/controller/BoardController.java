@@ -17,6 +17,12 @@ public class BoardController {
   private BoardDAO boardDAO;
 
 
+  /**
+   * Get list of boards.
+   *
+   * @param model unuse
+   * @return "listboard" for result
+   */
   @RequestMapping("/a/listboard.do")
   public String getAll(Model model) {
 

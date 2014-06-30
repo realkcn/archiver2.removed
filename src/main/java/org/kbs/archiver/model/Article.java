@@ -124,6 +124,10 @@ public class Article implements ModelHasID {
     this.boardname = boardname;
   }
 
+  /**
+   *
+   * @return article id
+   */
   @Override
   public long getId() {
     return getArticleid();
