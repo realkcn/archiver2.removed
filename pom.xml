@@ -232,4 +232,21 @@
             </plugin>
         </plugins>
     </build>
+    <profiles>
+        <profile>
+            <id>workingtest</id>
+            <properties>
+                <testcase.groups>org.kbs.archiver.UnstableTest</testcase.groups>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>alltest</id>
+            <properties>
+                <testcase.groups>org.kbs.archiver.SlowTest,org.kbs.archiver.StableTest,org.kbs.archiver.UnstableTest</testcase.groups>
+            </properties>
+        </profile>
+    </profiles>
 </project>

@@ -39,15 +39,20 @@ public class BoardDAOTest {
   }
 
   @Test
-  @Category(StableTest.class)
+  @Category(UnstableTest.class)
   public void testUpdate() {
     String boardname="test";
     Board oldboard=boardDAO.selectByName(boardname);
+
+    assertEquals("测试专用版面",oldboard.getCname());
+    assertEquals("站务",oldboard.getSection());
     Board newboard1=new Board(oldboard);
     newboard1.setArticles(oldboard.getArticles()+1);
     boardDAO.update(newboard1);
 
     Board newboard=boardDAO.selectByName(boardname);
+    assertEquals("测试专用版面",newboard.getCname());
+    assertEquals("站务",newboard.getSection());
     assertEquals(oldboard.getArticles()+1,newboard.getArticles());
     boardDAO.update(oldboard);
 
@@ -101,7 +106,7 @@ public class BoardDAOTest {
     }
   }
 
-  @Category({SlowTest.class,UnstableTest.class})
+  @Category({SlowTest.class})
   @Test
   public void testScheduleExpired() throws Exception {
     long currenttime=System.currentTimeMillis();

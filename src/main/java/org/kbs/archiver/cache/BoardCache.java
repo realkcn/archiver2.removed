@@ -3,6 +3,8 @@ package org.kbs.archiver.cache;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.kbs.archiver.dao.BoardDAO;
 import org.kbs.archiver.model.Board;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +18,8 @@ import java.util.List;
 
 @Component
 public class BoardCache implements BoardDAO {
+  private static final Logger LOG = LoggerFactory.getLogger(BoardCache.class);
+
   public BoardDAO getDBDAO() {
     return dbDAO;
   }
@@ -50,7 +54,7 @@ public class BoardCache implements BoardDAO {
   public void initCache() {
     synchronized (BoardCache.class) {
       if (!caching) {
-        System.out.println("init board cache");
+        LOG.info("init board cache");
         HashMap<Long,Board> newidMap=new HashMap<>();
         HashMap<String,Board> newnameMap=new HashMap<>();
         ArrayList<Board> newvisibleboardlist=new ArrayList<>();
@@ -58,7 +62,7 @@ public class BoardCache implements BoardDAO {
         for (Board board : newboards) {
           newidMap.put(board.getBoardid(),board);
           newnameMap.put(board.getName().toLowerCase(),board);
-          System.out.println("put "+ ToStringBuilder.reflectionToString(board));
+          LOG.debug("put "+ ToStringBuilder.reflectionToString(board));
           if (!board.isIshidden())
             newvisibleboardlist.add(board);
         }
@@ -96,6 +100,7 @@ public class BoardCache implements BoardDAO {
       initCache();
     }
     Board board=nameMap.get(name.toLowerCase());
+    LOG.debug("get board by name '"+name+"'="+ToStringBuilder.reflectionToString(board));
     if (board==null)
       getStatistics().incMissCount();
     else
@@ -109,6 +114,7 @@ public class BoardCache implements BoardDAO {
       initCache();
     }
     Board board=idMap.get(boardid);
+    LOG.debug("get board by id "+boardid+"="+ToStringBuilder.reflectionToString(board));
     if (board==null)
       getStatistics().incMissCount();
     else
@@ -118,6 +124,7 @@ public class BoardCache implements BoardDAO {
 
   @Override
   public void update(Board board) {
+    LOG.debug("update board"+ToStringBuilder.reflectionToString(board));
     dbDAO.update(board);
     getStatistics().incExpiredCount();
     expireAll();

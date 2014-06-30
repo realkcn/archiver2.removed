@@ -1,6 +1,8 @@
 package org.kbs.archiver.cache;
 
 import org.kbs.archiver.model.ModelHasID;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 
@@ -11,6 +13,7 @@ import java.util.List;
  */
 public class IdBaseCache<T extends ModelHasID>  {
 
+  private static final Logger LOG = LoggerFactory.getLogger(IdBaseCache.class);
   public CacheManager getCacheManager() {
     return cacheManager;
   }
