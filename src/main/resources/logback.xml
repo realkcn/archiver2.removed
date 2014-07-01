@@ -10,7 +10,7 @@
     <timestamp key="byDay" datePattern="yyyyMMdd" />
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>WARN</level>
+            <level>${loglevel}</level>
         </filter>
         <encoder charset="UTF-8">
             <pattern>[%level] - %date - %logger#%line%n %msg%n</pattern>
@@ -25,6 +25,9 @@
             </fileNamePattern>
             <maxHistory>60</maxHistory>
         </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>${loglevel}</level>
+        </filter>
         <encoder>
             <pattern>%date %level [%thread] %logger{36} [%file : %line] %msg%n
             </pattern>
@@ -35,21 +38,25 @@
     <logger name="org.springframework" level="WARN" />
 
     <!-- quartz -->
-    <logger name="com.opensymphony" level="ERROR" />
+    <logger name="com.opensymphony" level="INFO" />
+    <logger name="org.quartz" level="INFO" />
 
     <!-- mybatis -->
     <logger name="org.mybatis" level="WARN" />
-    <logger name="org.apache.ibatis" level="WARN" />
+    <logger name="org.quartz" level="INFO" />
 
     <!-- urlrewrite -->
-    <logger name="org.tuckey" level="WARN" />
+    <logger name="org.tuckey" level="INFO" />
 
     <!-- jdbc pool -->
     <logger name="org.apache.commons.dbcp" level="WARN" />
     <logger name="java.sql" level="WARN" />
 
     <!-- jsp debug -->
-    <logger name="org.apache.jasper.compiler" level="WARN" />
+    <logger name="org.apache.jasper.compiler" level="DEBUG" />
+
+    <!-- ehcache -->
+    <logger name="net.sf.ehcache" level="INFO" />
 
     <logger name="org.kbs" level="INFO" />
 

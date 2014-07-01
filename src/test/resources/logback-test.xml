@@ -1,4 +1,4 @@
-<configuration>
+<configuration scan="true" scanPeriod="5 minutes">
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <!-- encoder 默认配置为PatternLayoutEncoder -->
         <encoder>
@@ -6,13 +6,16 @@
         </encoder>
     </appender>
 
-    <logger name="org" level="${loglevel}" additivity="false">
+    <logger name="org" level="DEBUG" additivity="false">
         <appender-ref ref="STDOUT"/>
     </logger>
 
     <logger name="org.kbs" level="DEBUG" additivity="false">
         <appender-ref ref="STDOUT"/>
     </logger>
+
+    <!-- jsp debug -->
+    <logger name="org.apache.jasper.compiler" level="DEBUG" />
 
     <root level="${loglevel}">
         <appender-ref ref="STDOUT"/>

@@ -16,6 +16,7 @@
                 <archiver.dbuser>test</archiver.dbuser>
                 <archiver.dbpass>test</archiver.dbpass>
                 <archiver.dbdriver>com.mysql.jdbc.Driver</archiver.dbdriver>
+                <archiver.workdir>./target/work</archiver.workdir>
                 <loglevel>INFO</loglevel>
             </properties>
         </profile>

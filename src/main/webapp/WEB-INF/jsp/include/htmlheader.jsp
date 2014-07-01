@@ -20,7 +20,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 </script>
 -->
 <c:if test="${docbase==null}">
-    <c:set var="docbase" value="../" scope="request"/>
+    <c:set var="docbase" value="./" scope="request"/>
 </c:if>
 
 <meta charset="utf-8" />
