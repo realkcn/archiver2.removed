@@ -16,40 +16,42 @@ import javax.annotation.Resource;
 @Scope("prototype")
 public class CacheUtils {
 
-  @Resource(name="cacheManager")
-  private EhCacheCacheManager cacheManager;
+    @Resource(name = "cacheManager")
+    private EhCacheCacheManager cacheManager;
 
-  public Ehcache getCache() {
-    return cache;
-  }
+    public Ehcache getCache() {
+        return cache;
+    }
 
-  public void setCache(Ehcache cache) {
-    this.cache = cache;
-  }
+    public void setCache(Ehcache cache) {
+        this.cache = cache;
+    }
 
-  private Ehcache cache;
-  CacheStatistics saveStatistics;
+    private Ehcache cache;
 
-  public CacheUtils() {
+    CacheStatistics saveStatistics;
 
-  }
-  public void setCache(String cachename) {
-    cache=((EhCacheCache)cacheManager.getCache(cachename)).getNativeCache();
-  }
+    public CacheUtils() {
 
-  public void saveStat() {
-     saveStatistics=new CacheStatistics(cache.getStatistics());
-  }
+    }
 
-  public CacheStatistics getSaveStatistics() {
-    return saveStatistics;
-  }
+    public void setCache(String cachename) {
+        cache = ((EhCacheCache) cacheManager.getCache(cachename)).getNativeCache();
+    }
 
-  public CacheStatistics getStatistics() {
-    return new CacheStatistics(cache.getStatistics());
-  }
+    public void saveStat() {
+        saveStatistics = new CacheStatistics(cache.getStatistics());
+    }
 
-  public void removeAll() {
-    cache.removeAll();
-  }
+    public CacheStatistics getSaveStatistics() {
+        return saveStatistics;
+    }
+
+    public CacheStatistics getStatistics() {
+        return new CacheStatistics(cache.getStatistics());
+    }
+
+    public void removeAll() {
+        cache.removeAll();
+    }
 }

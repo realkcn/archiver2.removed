@@ -8,8 +8,10 @@
     <short-name>Pager</short-name>
     <uri>http://ar.newsmth.net/taglibs/pager</uri>
     <tag>
-        <name>pager</name>  <!-- 标签名字 -->
-        <tag-class>org.kbs.commons.tag.PagerTag</tag-class>  <!-- 指定你的标签的类 -->
+        <name>pager</name>
+        <!-- 标签名字 -->
+        <tag-class>org.kbs.commons.tag.PagerTag</tag-class>
+        <!-- 指定你的标签的类 -->
         <body-content>JSP</body-content>
         <attribute>
             <name>id</name>

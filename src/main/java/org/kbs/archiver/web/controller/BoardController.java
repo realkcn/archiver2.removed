@@ -13,22 +13,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller("boardController")
 public class BoardController {
-  @Autowired
-  private BoardDAO boardDAO;
+    @Autowired
+    private BoardDAO boardDAO;
 
+    /**
+     * Get list of boards.
+     * 
+     * @param model unuse
+     * @return "listboard" for result
+     */
+    @RequestMapping("/a/listboard.do")
+    public String getAll(Model model) {
 
-  /**
-   * Get list of boards.
-   *
-   * @param model unuse
-   * @return "listboard" for result
-   */
-  @RequestMapping("/a/listboard.do")
-  public String getAll(Model model) {
-
-    model.addAttribute("boards",boardDAO.selectAll());
-    return "listboard";
-  }
-//  @Resource
-//  private
+        model.addAttribute("boards", boardDAO.selectAll());
+        return "listboard";
+    }
+    // @Resource
+    // private
 }

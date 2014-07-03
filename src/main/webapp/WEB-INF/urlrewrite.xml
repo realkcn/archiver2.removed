@@ -1,70 +1,70 @@
-<?xml version="1.0" encoding="utf-8"?>  
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE urlrewrite PUBLIC "-//tuckey.org//DTD UrlRewrite 4.0//EN"
         "http://www.tuckey.org/res/dtds/urlrewrite4.0.dtd">
 
 <!-- Configuration file for UrlRewriteFilter http://tuckey.org/urlrewrite/ -->
 <urlrewrite decode-using="null">
-	<rule>
-		<note>
-			rewrite /boards.html to /a/listboard.do
+    <rule>
+        <note>
+            rewrite /boards.html to /a/listboard.do
         </note>
-		<from>^/boards.html$</from>
-		<to last="true">/a/listboard.do</to>
-	</rule>
-	<rule>
-		<note>
-			rewrite /board-101.html to /a/listthread.do?id=101
+        <from>^/boards.html$</from>
+        <to last="true">/a/listboard.do</to>
+    </rule>
+    <rule>
+        <note>
+            rewrite /board-101.html to /a/listthread.do?id=101
         </note>
-		<from>^/board-([0-9]+).html$</from>
-		<to last="true">/listthread.do?boardid=$1</to>
-	</rule>
-	<rule>
-		<note>
-			rewrite /board-101-1.html to /a/listthread.do?id=101&amp;pageno=1
+        <from>^/board-([0-9]+).html$</from>
+        <to last="true">/listthread.do?boardid=$1</to>
+    </rule>
+    <rule>
+        <note>
+            rewrite /board-101-1.html to /a/listthread.do?id=101&amp;pageno=1
         </note>
-		<from>^/board-([0-9]+)-([0-9]+).html$</from>
-		<to last="true">/a/listthread.do?boardid=$1&amp;pageno=$2</to>
-	</rule>
-	<rule>
-		<note>
-			rewrite /thread-101.html to /a/thread.do?tid=101
+        <from>^/board-([0-9]+)-([0-9]+).html$</from>
+        <to last="true">/a/listthread.do?boardid=$1&amp;pageno=$2</to>
+    </rule>
+    <rule>
+        <note>
+            rewrite /thread-101.html to /a/thread.do?tid=101
         </note>
-		<from>/thread-([0-9a-zA-Z]+).html$</from>
-		<to last="true">/a/listarticle.do?tid=$1</to>
-	</rule>
-	<rule>
-		<note>
-			rewrite /thread-101-1.html to /a/listarticle.do?id=101&amp;pageno=1
+        <from>/thread-([0-9a-zA-Z]+).html$</from>
+        <to last="true">/a/listarticle.do?tid=$1</to>
+    </rule>
+    <rule>
+        <note>
+            rewrite /thread-101-1.html to /a/listarticle.do?id=101&amp;pageno=1
         </note>
-		<from>^/thread-([0-9a-zA-Z]+)-([0-9]+).html$</from>
-		<to last="true">/a/listarticle.do?tid=$1&amp;pageno=$2</to>
-	</rule>
-	<rule>
-		<note>
-			rewrite /abyu-KCN.html to /a/listarticlebyauthor.do?author=KCN
+        <from>^/thread-([0-9a-zA-Z]+)-([0-9]+).html$</from>
+        <to last="true">/a/listarticle.do?tid=$1&amp;pageno=$2</to>
+    </rule>
+    <rule>
+        <note>
+            rewrite /abyu-KCN.html to /a/listarticlebyauthor.do?author=KCN
         </note>
-		<from>^/abyu-([0-9a-zA-Z]+).html$</from>
-		<to last="true">/a/listarticlebyauthor.do?author=$1</to>
-	</rule>
-	<rule>
-		<note>
-			rewrite /abyu-KCN-1.html to /a/listarticlebyauthor.do?author=KCN&amp;page=1
+        <from>^/abyu-([0-9a-zA-Z]+).html$</from>
+        <to last="true">/a/listarticlebyauthor.do?author=$1</to>
+    </rule>
+    <rule>
+        <note>
+            rewrite /abyu-KCN-1.html to /a/listarticlebyauthor.do?author=KCN&amp;page=1
         </note>
-		<from>^/abyu-([0-9a-zA-Z]+)-([0-9]+).html$</from>
-		<to last="true">/a/listarticlebyauthor.do?author=$1&amp;pageno=$2</to>
-	</rule>
-	<rule>
-		<note>
-			rewrite /att/xxxxx/gfd.gif to /a/getattachment.do?encodingURL=xxxxxx
+        <from>^/abyu-([0-9a-zA-Z]+)-([0-9]+).html$</from>
+        <to last="true">/a/listarticlebyauthor.do?author=$1&amp;pageno=$2</to>
+    </rule>
+    <rule>
+        <note>
+            rewrite /att/xxxxx/gfd.gif to /a/getattachment.do?encodingURL=xxxxxx
         </note>
-		<from>^/att/([0-9a-zA-Z]+)/.*$</from>
-		<to last="true">/a/getattachment.do?encodingURL=$1</to>
-	</rule>
-	<rule>
-		<note>
-			rewrite /article-xxxxx.html to /a/getArticle.do?encodingURL=xxxxx
+        <from>^/att/([0-9a-zA-Z]+)/.*$</from>
+        <to last="true">/a/getattachment.do?encodingURL=$1</to>
+    </rule>
+    <rule>
+        <note>
+            rewrite /article-xxxxx.html to /a/getArticle.do?encodingURL=xxxxx
         </note>
-		<from>^/article-([0-9a-zA-Z]+)\.html$</from>
-		<to last="true">/a/getarticle.do?encodingURL=$1</to>
-	</rule>
+        <from>^/article-([0-9a-zA-Z]+)\.html$</from>
+        <to last="true">/a/getarticle.do?encodingURL=$1</to>
+    </rule>
 </urlrewrite>

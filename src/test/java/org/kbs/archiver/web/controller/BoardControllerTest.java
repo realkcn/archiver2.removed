@@ -19,29 +19,26 @@ import org.springframework.web.context.WebApplicationContext;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration(value = "src/main/webapp")
-@ContextConfiguration(locations={"file:src/main/webapp/WEB-INF/spring-servlet.xml", "classpath:spring-test.xml"})
+@ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/spring-servlet.xml", "classpath:spring-test.xml" })
 @Category(StableTest.class)
 public class BoardControllerTest {
 
-  @SuppressWarnings("SpringJavaAutowiringInspection")
+    @SuppressWarnings("SpringJavaAutowiringInspection")
+    @Autowired
+    private WebApplicationContext wac;
 
-  @Autowired
-  private WebApplicationContext wac;
+    private MockMvc mockMvc;
 
-  private MockMvc mockMvc;
+    @Before
+    public void setUp() throws Exception {
+        mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
+    }
 
-  @Before
-  public void setUp() throws Exception {
-    mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
-  }
-
-  @Test
-  public void testGetAll() throws Exception {
-    MvcResult result = mockMvc.perform(
-            MockMvcRequestBuilders.get("/a/listboard.do"))
-      .andExpect(MockMvcResultMatchers.view().name("listboard"))
-      .andExpect(MockMvcResultMatchers.model().attributeExists("boards"))
-      .andReturn();
-    Assert.assertNotNull(result.getModelAndView().getModel().get("boards"));
-  }
+    @Test
+    public void testGetAll() throws Exception {
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/a/listboard.do"))
+                .andExpect(MockMvcResultMatchers.view().name("listboard"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("boards")).andReturn();
+        Assert.assertNotNull(result.getModelAndView().getModel().get("boards"));
+    }
 }

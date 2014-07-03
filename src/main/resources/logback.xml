@@ -5,9 +5,9 @@
 <configuration scan="true" scanPeriod="5 minutes">
     <contextName>Logging</contextName>
     <!-- property name="tip" value=":" / -->
-    <property name="logback.project.name" value="archiver" />
-    <property name="logback.logs.module.name" value="default" />
-    <timestamp key="byDay" datePattern="yyyyMMdd" />
+    <property name="logback.project.name" value="archiver"/>
+    <property name="logback.logs.module.name" value="default"/>
+    <timestamp key="byDay" datePattern="yyyyMMdd"/>
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>${loglevel}</level>
@@ -35,33 +35,33 @@
     </appender>
 
     <!-- spring -->
-    <logger name="org.springframework" level="WARN" />
+    <logger name="org.springframework" level="WARN"/>
 
     <!-- quartz -->
-    <logger name="com.opensymphony" level="INFO" />
-    <logger name="org.quartz" level="INFO" />
+    <logger name="com.opensymphony" level="INFO"/>
+    <logger name="org.quartz" level="INFO"/>
 
     <!-- mybatis -->
-    <logger name="org.mybatis" level="WARN" />
-    <logger name="org.quartz" level="INFO" />
+    <logger name="org.mybatis" level="WARN"/>
+    <logger name="org.quartz" level="INFO"/>
 
     <!-- urlrewrite -->
-    <logger name="org.tuckey" level="INFO" />
+    <logger name="org.tuckey" level="INFO"/>
 
     <!-- jdbc pool -->
-    <logger name="org.apache.commons.dbcp" level="WARN" />
-    <logger name="java.sql" level="WARN" />
+    <logger name="org.apache.commons.dbcp" level="WARN"/>
+    <logger name="java.sql" level="WARN"/>
 
     <!-- jsp debug -->
-    <logger name="org.apache.jasper.compiler" level="DEBUG" />
+    <logger name="org.apache.jasper.compiler" level="DEBUG"/>
 
     <!-- ehcache -->
-    <logger name="net.sf.ehcache" level="INFO" />
+    <logger name="net.sf.ehcache" level="INFO"/>
 
-    <logger name="org.kbs" level="INFO" />
+    <logger name="org.kbs" level="INFO"/>
 
     <root level="${archiver.loglevel}">
-        <appender-ref ref="console" />
-        <appender-ref ref="file" />
+        <appender-ref ref="console"/>
+        <appender-ref ref="file"/>
     </root>
 </configuration>

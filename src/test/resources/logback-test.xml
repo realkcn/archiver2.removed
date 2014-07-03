@@ -15,7 +15,7 @@
     </logger>
 
     <!-- jsp debug -->
-    <logger name="org.apache.jasper.compiler" level="DEBUG" />
+    <logger name="org.apache.jasper.compiler" level="DEBUG"/>
 
     <root level="${loglevel}">
         <appender-ref ref="STDOUT"/>

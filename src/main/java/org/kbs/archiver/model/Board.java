@@ -4,131 +4,140 @@ package org.kbs.archiver.model;
  * Created by kcn on 14-6-17.
  */
 
-
 public class Board implements ModelHasID {
-  private long boardid;
-  private String name;
-  private int threads;
-  private int articles;
-  private boolean ishidden;
-  private long lastarticleid;
-  private String cname;
-  private String groupid;
-  private String section;
-  private boolean ignored;
-  private long lastdeleteid;
+    private long boardid;
 
-  public Board() {
+    private String name;
 
-  }
+    private int threads;
 
-  public Board(Board template) {
-    boardid=template.boardid;
-    name=template.name;
-    threads=template.threads;
-    articles=template.articles;
-    ishidden=template.ishidden;
-    lastarticleid=template.lastarticleid;
-    cname=template.cname;
-    groupid=template.groupid;
-    section=template.section;
-    ignored=template.ignored;
-    lastdeleteid=template.lastdeleteid;
-  }
+    private int articles;
 
-  public long getBoardid() {
-    return boardid;
-  }
+    private boolean ishidden;
 
-  public void setBoardid(long boardid) {
-    this.boardid = boardid;
-  }
+    private long lastarticleid;
 
-  public String getName() {
-    return name;
-  }
+    private String cname;
 
-  public void setName(String name) {
-    this.name = name;
-  }
+    private String groupid;
 
-  public int getThreads() {
-    return threads;
-  }
+    private String section;
 
-  public void setThreads(int threads) {
-    this.threads = threads;
-  }
+    private boolean ignored;
 
-  public int getArticles() {
-    return articles;
-  }
+    private long lastdeleteid;
 
-  public void setArticles(int articles) {
-    this.articles = articles;
-  }
+    public Board() {
 
-  public boolean isIshidden() {
-    return ishidden;
-  }
+    }
 
-  public void setIshidden(boolean ishidden) {
-    this.ishidden = ishidden;
-  }
+    public Board(Board template) {
+        boardid = template.boardid;
+        name = template.name;
+        threads = template.threads;
+        articles = template.articles;
+        ishidden = template.ishidden;
+        lastarticleid = template.lastarticleid;
+        cname = template.cname;
+        groupid = template.groupid;
+        section = template.section;
+        ignored = template.ignored;
+        lastdeleteid = template.lastdeleteid;
+    }
 
-  public long getLastarticleid() {
-    return lastarticleid;
-  }
+    public long getBoardid() {
+        return boardid;
+    }
 
-  public void setLastarticleid(long lastarticleid) {
-    this.lastarticleid = lastarticleid;
-  }
+    public void setBoardid(long boardid) {
+        this.boardid = boardid;
+    }
 
-  public String getCname() {
-    return cname;
-  }
+    public String getName() {
+        return name;
+    }
 
-  public void setCname(String cname) {
-    this.cname = cname;
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-  public String getGroupid() {
-    return groupid;
-  }
+    public int getThreads() {
+        return threads;
+    }
 
-  public void setGroupid(String groupid) {
-    this.groupid = groupid;
-  }
+    public void setThreads(int threads) {
+        this.threads = threads;
+    }
 
-  public String getSection() {
-    return section;
-  }
+    public int getArticles() {
+        return articles;
+    }
 
-  public void setSection(String section) {
-    this.section = section;
-  }
+    public void setArticles(int articles) {
+        this.articles = articles;
+    }
 
-  public boolean isIgnored() {
-    return ignored;
-  }
+    public boolean isIshidden() {
+        return ishidden;
+    }
 
-  public void setIgnored(boolean ignored) {
-    this.ignored = ignored;
-  }
+    public void setIshidden(boolean ishidden) {
+        this.ishidden = ishidden;
+    }
 
-  public long getLastdeleteid() {
-    return lastdeleteid;
-  }
+    public long getLastarticleid() {
+        return lastarticleid;
+    }
 
-  public void setLastdeleteid(long lastdeleteid) {
-    this.lastdeleteid = lastdeleteid;
-  }
+    public void setLastarticleid(long lastarticleid) {
+        this.lastarticleid = lastarticleid;
+    }
 
-  /**
-   * @return board id
-   */
-  @Override
-  public long getId() {
-    return getBoardid();
-  }
+    public String getCname() {
+        return cname;
+    }
+
+    public void setCname(String cname) {
+        this.cname = cname;
+    }
+
+    public String getGroupid() {
+        return groupid;
+    }
+
+    public void setGroupid(String groupid) {
+        this.groupid = groupid;
+    }
+
+    public String getSection() {
+        return section;
+    }
+
+    public void setSection(String section) {
+        this.section = section;
+    }
+
+    public boolean isIgnored() {
+        return ignored;
+    }
+
+    public void setIgnored(boolean ignored) {
+        this.ignored = ignored;
+    }
+
+    public long getLastdeleteid() {
+        return lastdeleteid;
+    }
+
+    public void setLastdeleteid(long lastdeleteid) {
+        this.lastdeleteid = lastdeleteid;
+    }
+
+    /**
+     * @return board id
+     */
+    @Override
+    public long getId() {
+        return getBoardid();
+    }
 }

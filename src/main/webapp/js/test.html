@@ -1,9 +1,3 @@
-
-
-
-
-
-
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -12,7 +6,6 @@
     <meta http-equiv="cache-control" content="max-age=120;">
     <meta http-equiv="expires" content="2014-06-21T10:11:19Z">
     <meta http-equiv="description" content="水木社区版面列表">
-
 
 
     <!--
@@ -36,11 +29,9 @@
     -->
 
 
-
-
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <script src="../js/jquery-1.11.1.min.js" />
+    <script src="../js/jquery-1.11.1.min.js"/>
     <script src="../js/bootstrap.min.js"></script>
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/bootstrap-theme.min.css" rel="stylesheet">
@@ -54,16 +45,11 @@
     <!--[if lt IE 8]>
     <link href="../css/bootstrap-ie7.css" rel="stylesheet">
     <![endif]-->
-    <link rel="stylesheet" type="text/css" href="../css/jquery-ui-1.10.4.custom.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/jquery-ui-1.10.4.custom.min.css"/>
     <script type="text/javascript" src="../js/jquery-ui-1.10.4.custom.min.js"></script>
     <title>水木社区归档站 - 版面列表</title>
 </head>
 <body onLoad='document.getElementById("boardsearch").focus()'>
-
-
-
-
-
 
 
 <div class="navbar navbar-inverse" role="navigation">
@@ -112,16 +98,22 @@
     <div class="row-fluid">
         <div class="span12">
             <span class="label">文字标签</span>
+
             <div class="btn-group">
-                <button class="btn" type="button"><em class="icon-align-left"></em></button> <button class="btn" type="button"><em class="icon-align-center"></em></button> <button class="btn" type="button"><em class="icon-align-right"></em></button> <button class="btn" type="button"><em class="icon-align-justify"></em></button>
+                <button class="btn" type="button"><em class="icon-align-left"></em></button>
+                <button class="btn" type="button"><em class="icon-align-center"></em></button>
+                <button class="btn" type="button"><em class="icon-align-right"></em></button>
+                <button class="btn" type="button"><em class="icon-align-justify"></em></button>
             </div>
             <div class="hero-unit">
                 <h1>
                     Hello, world!
                 </h1>
+
                 <p>
                     这是一个可视化布局模板, 你可以点击模板里的文字进行修改, 也可以通过点击弹出的编辑框进行富文本修改. 拖动区块能实现排序.
                 </p>
+
                 <p>
                     <a class="btn btn-primary btn-large" href="#">参看更多 »</a>
                 </p>
@@ -132,10 +124,10 @@
 <div class="container">
     <div class="control-group form-horizontal pull-left">
         <label class="control-label h4">快速查找版面</label>
-        <input id="boardsearch" name="boardsearch" class="input-medium" />
+        <input id="boardsearch" name="boardsearch" class="input-medium"/>
     </div>
 
-    <section class="table-responsive" >
+    <section class="table-responsive">
         <table class="table table-striped table-bordered">
             <thead>
             <td>序号</td>
@@ -147,11 +139,6 @@
             <tbody>
 
 
-
-
-
-
-
             <tr>
                 <td>1</td>
                 <td><a href="board-305.html">Announce</a></td>
@@ -159,10 +146,6 @@
                 <td>2739</td>
                 <td>2763</td>
             </tr>
-
-
-
-
 
 
             <tr>
@@ -179,32 +162,42 @@
 </div>
 
 <script>
-    $(function() {
+    $(function () {
         var boardArray = [
-            {value:'Announce 站务公告栏',label:'Announce 站务公告栏',id:305},{value:'Test 测试专用版面',label:'Test 测试专用版面',id:326}
+            {value: 'Announce 站务公告栏', label: 'Announce 站务公告栏', id: 305},
+            {value: 'Test 测试专用版面', label: 'Test 测试专用版面', id: 326}
         ];
 
-        $( "#boardsearch" ).autocomplete({
+        $("#boardsearch").autocomplete({
             minLength: 1,
             source: boardArray,
-            focus: function( event, ui ) {
-                $( "#project" ).val( ui.item.label );
+            focus: function (event, ui) {
+                $("#project").val(ui.item.label);
                 return false;
             },
-            select: function( event, ui ) {
-                window.location.href="board-"+ui.item.id+".html";
+            select: function (event, ui) {
+                window.location.href = "board-" + ui.item.id + ".html";
                 return false;
             }
         })
-                .data( "autocomplete" )._renderItem = function( ul, item ) {
-            return $( "<li></li>" )
-                    .data( "item.autocomplete", item )
-                    .append( "<a>" + item.value+"</a>" )
-                    .appendTo( ul );
+                .data("autocomplete")._renderItem = function (ul, item) {
+            return $("<li></li>")
+                    .data("item.autocomplete", item)
+                    .append("<a>" + item.value + "</a>")
+                    .appendTo(ul);
         };
     });
 </script>
 
-<script type="text/javascript"> $(function(){if($.browser.msie&&parseInt($.browser.version,10)===6){$('.row div[class^="span"]:last-child').addClass("last-child");$('[class="span"]').addClass("margin-left-20");$(':button[class="btn"], :reset[class="btn"], :submit[class="btn"], input[type="button"]').addClass("button-reset");$(":checkbox").addClass("input-checkbox");$('[class^="icon-"], [class=" icon-"]').addClass("icon-sprite");$(".pagination li:first-child a").addClass("pagination-first-child")}}) </script>
+<script type="text/javascript"> $(function () {
+    if ($.browser.msie && parseInt($.browser.version, 10) === 6) {
+        $('.row div[class^="span"]:last-child').addClass("last-child");
+        $('[class="span"]').addClass("margin-left-20");
+        $(':button[class="btn"], :reset[class="btn"], :submit[class="btn"], input[type="button"]').addClass("button-reset");
+        $(":checkbox").addClass("input-checkbox");
+        $('[class^="icon-"], [class=" icon-"]').addClass("icon-sprite");
+        $(".pagination li:first-child a").addClass("pagination-first-child")
+    }
+}) </script>
 </body>
 </html>

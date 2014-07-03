@@ -14,7 +14,7 @@
     out.print(format.format(new Date(System.currentTimeMillis()+1000*120)));
 %>">
     <meta http-equiv="description" content="水木社区版面列表">
-    <link rel="stylesheet" type="text/css" href="${docbase}css/jquery-ui-1.10.4.custom.min.css" />
+    <link rel="stylesheet" type="text/css" href="${docbase}css/jquery-ui-1.10.4.custom.min.css"/>
     <script type="text/javascript" src="${docbase}js/jquery-ui-1.10.4.custom.min.js"></script>
     <title>水木社区归档站 - 版面列表</title>
 </head>
@@ -24,10 +24,10 @@
 <div class="container">
     <div class="control-group form-horizontal pull-left">
         <label class="control-label h4">快速查找版面</label>
-        <input id="boardsearch" name="boardsearch" class="input-medium" />
+        <input id="boardsearch" name="boardsearch" class="input-medium"/>
     </div>
 
-    <section class="table-responsive" >
+    <section class="table-responsive">
         <table class="table table-striped table-bordered table-hover">
             <thead>
             <tr>
@@ -40,14 +40,16 @@
             </thead>
             <tbody>
             <c:set var="boardarray" value=""/>
-             <c:forEach var="board" varStatus="loopstatus" items="${boards}">
+            <c:forEach var="board" varStatus="loopstatus" items="${boards}">
                 <c:choose>
-                <c:when test="${loopstatus.count==1}">
-                     <c:set var="boardarray" value="{value:'${board.name} ${board.cname}',label:'${board.name} ${board.cname}',id:${board.boardid}}"/>
-                 </c:when><c:otherwise>
-                    <c:set var="boardarray" value="${boardarray},{value:'${board.name} ${board.cname}',label:'${board.name} ${board.cname}',id:${board.boardid}}"/>
-                 </c:otherwise>
-                 </c:choose>
+                    <c:when test="${loopstatus.count==1}">
+                        <c:set var="boardarray"
+                               value="{value:'${board.name} ${board.cname}',label:'${board.name} ${board.cname}',id:${board.boardid}}"/>
+                    </c:when><c:otherwise>
+                    <c:set var="boardarray"
+                           value="${boardarray},{value:'${board.name} ${board.cname}',label:'${board.name} ${board.cname}',id:${board.boardid}}"/>
+                </c:otherwise>
+                </c:choose>
                 <tr>
                     <td>${loopstatus.count}</td>
                     <td><a href="board-${board.boardid}.html">${board.name}</a></td>
@@ -62,28 +64,28 @@
 </div>
 
 <script>
-    $(function() {
+    $(function () {
         var boardArray = [
-                ${boardarray}
+            ${boardarray}
         ];
 
-        $( "#boardsearch" ).autocomplete({
+        $("#boardsearch").autocomplete({
             minLength: 1,
             source: boardArray,
-            focus: function( event, ui ) {
-                $( "#project" ).val( ui.item.label );
+            focus: function (event, ui) {
+                $("#project").val(ui.item.label);
                 return false;
             },
-            select: function( event, ui ) {
-                window.location.href="board-"+ui.item.id+".html";
+            select: function (event, ui) {
+                window.location.href = "board-" + ui.item.id + ".html";
                 return false;
             }
         })
-                .data( "autocomplete" )._renderItem = function( ul, item ) {
-            return $( "<li></li>" )
-                    .data( "item.autocomplete", item )
-                    .append( "<a>" + item.value+"</a>" )
-                    .appendTo( ul );
+                .data("autocomplete")._renderItem = function (ul, item) {
+            return $("<li></li>")
+                    .data("item.autocomplete", item)
+                    .append("<a>" + item.value + "</a>")
+                    .appendTo(ul);
         };
     });
 </script>

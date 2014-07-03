@@ -7,7 +7,7 @@
     <task:annotation-driven/>
     <bean id="boardCacheExpireTriger" class="org.springframework.scheduling.quartz.CronTriggerBean">
         <property name="jobDetail">
-            <ref bean="boardCacheExpireJob" />
+            <ref bean="boardCacheExpireJob"/>
         </property>
         <property name="cronExpression">
             <value>0 0/5 * * * ?</value>

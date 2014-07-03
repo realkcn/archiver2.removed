@@ -16,15 +16,15 @@
   limitations under the License.
 -->
 <tomcat-users>
-<!--
-  <role rolename="tomcat"/>
-  <role rolename="role1"/>
-  <user username="tomcat" password="tomcat" roles="tomcat"/>
-  <user username="both" password="tomcat" roles="tomcat,role1"/>
-  <user username="role1" password="tomcat" roles="role1"/>
--->
-  <role rolename="archiveradmin"/>
-  <user username="artest" password="artest" roles="archiveradmin"/>
-  <role rolename="archivermonitor"/>
-  <user username="armon" password="armon" roles="archivermonitor"/>
+    <!--
+      <role rolename="tomcat"/>
+      <role rolename="role1"/>
+      <user username="tomcat" password="tomcat" roles="tomcat"/>
+      <user username="both" password="tomcat" roles="tomcat,role1"/>
+      <user username="role1" password="tomcat" roles="role1"/>
+    -->
+    <role rolename="archiveradmin"/>
+    <user username="artest" password="artest" roles="archiveradmin"/>
+    <role rolename="archivermonitor"/>
+    <user username="armon" password="armon" roles="archivermonitor"/>
 </tomcat-users>

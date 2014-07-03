@@ -225,13 +225,14 @@
                 <configuration>
                     <charset>utf-8</charset>
                     <systemProperties>
-                        <appserver.home>${project.build.directory}/tomcat</appserver.home>
-                        <derby.system.home>${project.build.directory}/target/tomcat/logs</derby.system.home>
                         <!--
-                        <appserver.base>${project.build.directory}/appserver-base</appserver.base>
-                        <java.io.tmpdir>${project.build.directory}</java.io.tmpdir>
+                        <appserver.base>${project.build.directory}/target/tomcat</appserver.base>
+                        <appserver.home>${project.build.directory}/tomcat</appserver.home>
+                        <java.io.tmpdir>${project.build.directory}/target/tomcat/work</java.io.tmpdir>
+                        <derby.system.home>${project.build.directory}/target/tomcat/logs</derby.system.home>
                         -->
                     </systemProperties>
+                    <additionalConfigFilesDir>${project.build.directory}/tomcat/conf</additionalConfigFilesDir>
                 </configuration>
                 <dependencies>
                     <dependency>
@@ -256,7 +257,8 @@
         <profile>
             <id>alltest</id>
             <properties>
-                <testcase.groups>org.kbs.archiver.SlowTest,org.kbs.archiver.StableTest,org.kbs.archiver.UnstableTest</testcase.groups>
+                <testcase.groups>org.kbs.archiver.SlowTest,org.kbs.archiver.StableTest,org.kbs.archiver.UnstableTest
+                </testcase.groups>
             </properties>
         </profile>
     </profiles>

@@ -50,17 +50,18 @@
     </div>
 </div>
 <c:if test="${requestScope.nobreadcrumbs==null}">
-<div class="container">
-    <ol class="breadcrumb">
-        <li><a href="${docbase}">首页</a></li>
-        <c:if test="${board}!=null">
-        <li><a href="${docbase}boards.html">版面列表</a></li>
-        <li><a href="${docbase}board-${board.boardid}.html">${board.cname}</a></li>
-        </c:if>
-        <li class="active">${requestScope.pagedetail}</li>
+    <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="${docbase}">首页</a></li>
+            <c:if test="${board}!=null">
+                <li><a href="${docbase}boards.html">版面列表</a></li>
+                <li><a href="${docbase}board-${board.boardid}.html">${board.cname}</a></li>
+            </c:if>
+            <li class="active">${requestScope.pagedetail}</li>
             <c:if test="board!=null"><a style="float: right"
-                                        href="http://www.newsmth.net/nForum/board/${board.name}" target="_blank">回主站[${board.cname}]版</a>
-        </c:if>
-    </ol>
-</div>
+                                        href="http://www.newsmth.net/nForum/board/${board.name}"
+                                        target="_blank">回主站[${board.cname}]版</a>
+            </c:if>
+        </ol>
+    </div>
 </c:if>
