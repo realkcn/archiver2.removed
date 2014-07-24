@@ -63,6 +63,10 @@
         <property name="mapperInterface" value="org.kbs.archiver.dao.BoardDAO"/>
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
     </bean>
+    <bean id="ThreadDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="org.kbs.archiver.dao.ThreadDAO"/>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+    </bean>
 
     <!--
         declare timer bean

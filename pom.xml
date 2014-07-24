@@ -223,6 +223,9 @@
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>2.2</version>
                 <configuration>
+                    <tomcatUsers>tomcat/conf/tomcat-users.xml</tomcatUsers>
+                    <tomcatLoggingFile>tomcat/conf/logging.properties</tomcatLoggingFile>
+                    <tomcatWebXml>tomcat/conf/web.xml</tomcatWebXml>
                     <charset>utf-8</charset>
                     <systemProperties>
                         <!--
