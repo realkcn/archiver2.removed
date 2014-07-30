@@ -15,7 +15,7 @@ import java.util.List;
 
 public interface BoardDAO {
     @Lang(RawLanguageDriver.class)
-    @Select("SELECT * FROM board order by boardid asc")
+    @Select("SELECT * FROM board where ishidden=false order by boardid asc")
     public List<Board> selectAll();
 
     @Lang(RawLanguageDriver.class)
@@ -23,11 +23,11 @@ public interface BoardDAO {
     public List<Board> selectAllVisible();
 
     @Lang(RawLanguageDriver.class)
-    @Select("Select * From board Where name=#{name}")
+    @Select("Select * From board Where name=#{name} and ishidden=false")
     public Board selectByName(@Param("name") String name);
 
     @Lang(RawLanguageDriver.class)
-    @Select("Select * From board Where boardid=#{boardid}")
+    @Select("Select * From board Where boardid=#{boardid} and ishidden=false")
     public Board selectById(@Param("boardid") long boardid);
 
     @Lang(RawLanguageDriver.class)
