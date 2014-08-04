@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.kbs.archiver.persistence.FrontPageMapper">
+    <select id="getGroups" resultType="String" useCache="true">
+        select groupid from board where ishidden=false Group by groupid
+    </select>
+    <select id="getHotThreads" resultType="org.kbs.archiver.ThreadEntity" useCache="false">
+        select * from newestthread
+        <if test="groupid!=null">
+            where newestthread.groupid=#{groupid}
+        </if>
+        order by articlenumber desc limit #{count};
+    </select>
+    <select id="getNewestThreads" resultType="org.kbs.archiver.ThreadEntity" useCache="false">
+        select * from newestthread order by lastposttime desc limit #{count};
+    </select>
+    <insert id="insertNewestThread" timeout="600" flushCache="false">
+        insert into newestthread select thread.*,board.cname as boardname,board.groupid as groupid from thread,board
+        where thread.boardid=board.boardid and board.ishidden=false and thread.isvisible=true and
+        TIMESTAMPDIFF(HOUR,lastposttime,sysdate()) &lt; #{offsethour}
+        ON DUPLICATE KEY UPDATE
+        newestthread.lastposttime=thread.lastposttime,newestthread.lastreply=thread.lastreply,newestthread.articlenumber=thread.articlenumber
+    </insert>
+    <delete id="deleteOldThread" flushCache="false">
+        delete from newestthread where TIMESTAMPDIFF(HOUR,lastposttime,sysdate()) &gt; #{offsethour} or
+        TIMESTAMPDIFF(HOUR,posttime,sysdate()) &gt; #{threadmaxage};
+    </delete>
+    <delete id="deleteAll" flushCache="false">
+        delete from newestthread;
+    </delete>
+    <delete id="deleteByid" flushCache="false">
+        delete from newestthread where threadid=#{threadid};
+    </delete>
+    <insert id="addThread" parameterType="org.kbs.archiver.ThreadEntity" flushCache="false">
+        insert into newestthread(threadid,boardid,subject,posttime,articlenumber,author,lastreply,lastposttime,
+        originid,encodingurl,groupid,boardname) values
+        (#{threadid},#{boardid},#{subject},#{posttime},#{articlenumber},#{author},
+        #{lastreply},#{lastposttime},#{originid},#{encodingurl},#{groupid},#{boardname})
+        ON DUPLICATE KEY UPDATE
+        lastreply=#{lastreply},lastposttime=#{lastposttime},articlenumber=#{articlenumber}
+    </insert>
+    <update id="updateThread" parameterType="org.kbs.archiver.ThreadEntity" flushCache="false">
+        update newestthread set
+        lastreply=#{lastreply},lastposttime=#{lastposttime},articlenumber=#{articlenumber}
+        where threadid=#{threadid}
+    </update>
+    <!-- nocache    <cache /> -->
+</mapper>
