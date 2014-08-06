@@ -17,7 +17,4 @@ public class ThreadService {
     @Autowired
     private ThreadDAO threadDAO;
 
-    public List<Long> getThreadsByBoard(long boardid) {
-
-    }
 }

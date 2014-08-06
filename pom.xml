@@ -7,7 +7,10 @@
     <groupId>org.kbs</groupId>
     <artifactId>archiver</artifactId>
     <version>2.0-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <modules>
+        <module>migrate-tool</module>
+    </modules>
+    <packaging>pom</packaging>
     <name>NewSMTH Archiver Webapp</name>
 
     <properties>
