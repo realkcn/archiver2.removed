@@ -22,12 +22,12 @@ public interface ThreadDAO {
 //    public void deleteByBoard(long boardid);
 //
 
-    @Lang(RawLanguageDriver.class)
-    @Select("SELECT * FROM thread where boardid=#{boardid} and isvisible=true ORDER BY lastposttime desc limit #{offset},#{limit}")
-    List<Thread> getByBoardPerPage(@Param("boardid")long boardid,@Param("offset") int offset, @Param("limit") int limit);
+//    @Lang(RawLanguageDriver.class)
+//    @Select("SELECT * FROM thread where boardid=#{boardid} and isvisible=true ORDER BY lastposttime desc limit #{offset},#{limit}")
+//    List<Thread> getByBoardPerPage(@Param("boardid")long boardid,@Param("offset") int offset, @Param("limit") int limit);
 //    public void delete(long threadid);
-
-    @Lang(RawLanguageDriver.class)
-    @Select("select * from thread where encodingurl=#{encodingurl} and isvisible=true")
-    public Thread getByEncodingURL(@Param("encodingurl")String encodingurl);
+//
+//    @Lang(RawLanguageDriver.class)
+//    @Select("select * from thread where encodingurl=#{encodingurl} and isvisible=true")
+//    public Thread getByEncodingURL(@Param("encodingurl")String encodingurl);
 }

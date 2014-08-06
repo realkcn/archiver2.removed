@@ -12,62 +12,20 @@
           class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="properties" ref="configproperties"/>
     </bean>
-    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-          destroy-method="close">
-        <property name="driverClassName" value="${dbdriver}"/>
-        <property name="url">
-            <value><![CDATA[${dburl}]]></value>
-        </property>
-        <property name="username" value="${dbuser}"/>
-        <property name="password" value="${dbpass}"/>
-        <property name="maxActive">
-            <value>40</value>
-        </property>
-        <property name="initialSize">
-            <value>4</value>
-        </property>
-        <property name="maxWait">
-            <value>60000</value>
-        </property>
-        <property name="maxIdle">
-            <value>20</value>
-        </property>
-        <property name="minIdle">
-            <value>3</value>
-        </property>
-        <property name="removeAbandoned">
-            <value>true</value>
-        </property>
-        <property name="removeAbandonedTimeout">
-            <value>180</value>
-        </property>
-        <property name="connectionProperties">
-            <value>clientEncoding=UTF-8</value>
-        </property>
-        <property name="timeBetweenEvictionRunsMillis">
-            <value>3600000</value>
-            <!--1 hours-->
-        </property>
-        <property name="testWhileIdle">
-            <value>true</value>
-        </property>
-        <property name="validationQuery">
-            <value>select 1 from dual</value>
-        </property>
-    </bean>
-    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="dataSource"/>
-        <property name="configLocation" value="classpath:mybatis.xml"/>
-    </bean>
-    <bean id="boardDBDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="mapperInterface" value="org.kbs.archiver.dao.BoardDAO"/>
-        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
-    </bean>
-    <bean id="ThreadDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="mapperInterface" value="org.kbs.archiver.dao.ThreadDAO"/>
-        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
-    </bean>
 
+    <bean id="boardDBDAO" class="org.kbs.archiver.dao.BoardDAOMongoImpl">
+
+    </bean>
+    <bean id="mongo" class="com.mongodb.Mongo">
+        <constructor-arg value="${db.host}"/>
+        <constructor-arg value="${db.port}"/>
+    </bean>
+    <bean id="db"  class="org.kbs.utils.MongoDBFactoryBean">
+        <property name="mongo" ref="mongo"/>
+        <property name="name" value="${app.db.name}"/>
+    </bean>
+        19.
+        </beans>
     <!--
         declare timer bean
     -->
