@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--suppress SpringModelInspection -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+       xsi:schemaLocation="
+          http://www.springframework.org/schema/data/mongo
+          http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
+          http://www.springframework.org/schema/beans
+		  http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+    <bean id="configproperties"
+          class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="location" value="file:${archiver.conf}"/>
+    </bean>
+    <bean id="propertyConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="properties" ref="configproperties"/>
+    </bean>
+
+    <bean id="boardDBDAO" class="org.kbs.archiver.dao.BoardDAOMongoImpl">
+
+    </bean>
+    <mongo:mongo host="${mongodb.host}" port="${mongodb.port}">
+        <mongo:options connections-per-host="8"
+                       threads-allowed-to-block-for-connection-multiplier="4"
+                       connect-timeout="1000"
+                       max-wait-time="1500}"
+                       auto-connect-retry="true"
+                       socket-keep-alive="true"
+                       socket-timeout="1500"
+                       slave-ok="true"
+                       write-number="1"
+                       write-timeout="0"
+                       write-fsync="true"/>
+    </mongo:mongo>
+    <mongo:db-factory dbname="${mongodb.database}" mongo-ref="mongo" username="${mongodb.user}" password="${mongodb.password}"/>
+    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+        <constructor-arg name="mongoDbFactory" ref="mongoDbFactory"/>
+    </bean>
+    <!--
+        declare timer bean
+    -->
+    <bean id="boardCacheExpireJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="boardDAO"/>
+        <property name="targetMethod" value="expireAll"/>
+    </bean>
+
+</beans>

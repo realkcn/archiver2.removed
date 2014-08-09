@@ -2,16 +2,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>archiver</artifactId>
+        <groupId>org.kbs</groupId>
+        <version>2.0-SNAPSHOT</version>
+    </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.kbs</groupId>
-    <artifactId>archiver</artifactId>
+    <artifactId>archiver-web</artifactId>
     <version>2.0-SNAPSHOT</version>
-    <modules>
-        <module>migrate-tool</module>
-        <module>web</module>
-    </modules>
-    <packaging>pom</packaging>
+    <packaging>war</packaging>
     <name>NewSMTH Archiver Webapp</name>
 
     <properties>
@@ -36,73 +37,68 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <dependency>
-                <groupId>org.springframework.data</groupId>
-                <artifactId>spring-data-mongodb</artifactId>
-                <version>1.4.2.RELEASE</version>
-            </dependency>
-            <dependency>
-                <groupId>org.kbs</groupId>
-                <artifactId>sso</artifactId>
-                <version>1.0</version>
-                <classifier>client</classifier>
-            </dependency>
-            <dependency>
-                <groupId>org.kbs</groupId>
-                <artifactId>library</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>javax.servlet.jsp</groupId>
-                <artifactId>jsp-api</artifactId>
-                <version>2.2</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.tuckey</groupId>
-                <artifactId>urlrewritefilter</artifactId>
-                <version>${urlrewritefilter.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.opensymphony.quartz</groupId>
-                <artifactId>quartz</artifactId>
-                <version>1.6.1</version>
-            </dependency>
-            <dependency>
-                <groupId>javax.servlet</groupId>
-                <artifactId>javax.servlet-api</artifactId>
-                <version>3.1.0</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>jstl</groupId>
-                <artifactId>jstl</artifactId>
-                <version>1.2</version>
-            </dependency>
-
-            <dependency>
-                <groupId>taglibs</groupId>
-                <artifactId>standard</artifactId>
-                <version>1.1.2</version>
-            </dependency>
-            <dependency>
-                <groupId>net.sf.ehcache</groupId>
-                <artifactId>ehcache</artifactId>
-                <version>${ehcache.version}</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-mongodb</artifactId>
+            <version>1.4.2.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.kbs</groupId>
+            <artifactId>sso</artifactId>
+            <version>1.0</version>
+            <classifier>client</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.kbs</groupId>
+            <artifactId>library</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
             <version>3.2.1</version>
         </dependency>
         <dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>jsp-api</artifactId>
+            <version>2.2</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.tuckey</groupId>
+            <artifactId>urlrewritefilter</artifactId>
+            <version>${urlrewritefilter.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.opensymphony.quartz</groupId>
+            <artifactId>quartz</artifactId>
+            <version>1.6.1</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.11</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>jstl</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>taglibs</groupId>
+            <artifactId>standard</artifactId>
+            <version>1.1.2</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -118,6 +114,21 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>${logback.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>${org.mybatis.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
+            <version>${org.mybatis.spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache</artifactId>
+            <version>${ehcache.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -146,8 +157,28 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+        </dependency>
     </dependencies>
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+            </testResource>
+        </testResources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -186,6 +217,44 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <tomcatUsers>tomcat/conf/tomcat-users.xml</tomcatUsers>
+                    <tomcatLoggingFile>tomcat/conf/logging.properties</tomcatLoggingFile>
+                    <tomcatWebXml>tomcat/conf/web.xml</tomcatWebXml>
+                    <charset>utf-8</charset>
+                    <systemProperties>
+                        <!--
+                        <appserver.base>${project.build.directory}/target/tomcat</appserver.base>
+                        <appserver.home>${project.build.directory}/tomcat</appserver.home>
+                        <java.io.tmpdir>${project.build.directory}/target/tomcat/work</java.io.tmpdir>
+                        <derby.system.home>${project.build.directory}/target/tomcat/logs</derby.system.home>
+                        -->
+                    </systemProperties>
+                    <additionalConfigFilesDir>${project.build.directory}/tomcat/conf</additionalConfigFilesDir>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
+    <profiles>
+        <profile>
+            <id>workingtest</id>
+            <properties>
+                <testcase.groups>org.kbs.archiver.UnstableTest</testcase.groups>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>alltest</id>
+            <properties>
+                <testcase.groups>org.kbs.archiver.SlowTest,org.kbs.archiver.StableTest,org.kbs.archiver.UnstableTest
+                </testcase.groups>
+            </properties>
+        </profile>
+    </profiles>
 </project>
