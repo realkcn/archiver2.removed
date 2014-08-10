@@ -1,5 +1,7 @@
 package org.kbs.archiver;
 
+import com.sohucs.auth.BasicSessionCredentials;
+import com.sohucs.auth.SohuCSCredentials;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

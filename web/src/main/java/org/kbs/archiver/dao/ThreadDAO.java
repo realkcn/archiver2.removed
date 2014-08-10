@@ -12,7 +12,7 @@ import java.util.List;
  */
 @SuppressWarnings("UnusedDeclaration")
 public interface ThreadDAO {
-    public Thread get(long threadid);
+    public Thread get(String threadid);
 //    public Thread getByOriginId(@Param("boardid")long boardid,@Param("originid")long originid);
 //    public Thread getByEncodingUrl(String encodingurl);
 //

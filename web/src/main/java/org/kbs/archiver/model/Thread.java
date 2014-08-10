@@ -1,14 +1,20 @@
 package org.kbs.archiver.model;
 
 import org.kbs.library.Converter;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 
 /**
  * Created by kcn on 14-6-17.
  */
-public class Thread implements ModelHasID {
-    private long boardid;
+@Document
+public class Thread {
+    @Id
+    private String threadid;
+
+    private String boardid;
 
     private String subject;
 
@@ -22,15 +28,13 @@ public class Thread implements ModelHasID {
 
     private Date lastposttime;
 
-    private long threadid;
-
     private String encodingurl;
 
     private long originid;
 
     private boolean isvisible = true;
 
-    public static Thread newThread(long threadid, Board board, Article article) {
+    public static Thread newThread(String threadid, Board board, Article article) {
         Thread thread = new Thread();
         thread.setThreadid(threadid);
         thread.setArticlenumber(1);// 考虑最后再插入
@@ -40,17 +44,17 @@ public class Thread implements ModelHasID {
         thread.setLastreply(article.getAuthor());
         thread.setPosttime(article.getPosttime());
         thread.setSubject(article.getSubject());
-        thread.setEncodingurl(Converter.randomEncodingfromlong(threadid));
+        thread.setEncodingurl(threadid);
         thread.setOriginid(article.getOriginid());
         return thread;
         // thread.setThreadid()
     }
 
-    public long getBoardid() {
+    public String getBoardid() {
         return boardid;
     }
 
-    public void setBoardid(long boardid) {
+    public void setBoardid(String boardid) {
         this.boardid = boardid;
     }
 
@@ -102,11 +106,11 @@ public class Thread implements ModelHasID {
         this.lastposttime = lastposttime;
     }
 
-    public long getThreadid() {
+    public String getThreadid() {
         return threadid;
     }
 
-    public void setThreadid(long threadid) {
+    public void setThreadid(String threadid) {
         this.threadid = threadid;
     }
 
@@ -134,11 +138,4 @@ public class Thread implements ModelHasID {
         this.isvisible = isvisible;
     }
 
-    /**
-     * @return thread id
-     */
-    @Override
-    public long getId() {
-        return getThreadid();
-    }
 }

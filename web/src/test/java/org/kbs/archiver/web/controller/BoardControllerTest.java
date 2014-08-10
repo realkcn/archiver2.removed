@@ -19,7 +19,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration(value = "src/main/webapp")
-@ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/spring-servlet.xml", "classpath:spring-test.xml" })
+@ContextConfiguration(locations = {"classpath:spring-test.xml"})
 @Category(StableTest.class)
 public class BoardControllerTest {
 
@@ -36,7 +36,7 @@ public class BoardControllerTest {
 
     @Test
     public void testGetAll() throws Exception {
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/a/listboard.do"))
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/listboard.do"))
                 .andExpect(MockMvcResultMatchers.view().name("listboard"))
                 .andExpect(MockMvcResultMatchers.model().attributeExists("boards")).andReturn();
         Assert.assertNotNull(result.getModelAndView().getModel().get("boards"));

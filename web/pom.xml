@@ -225,6 +225,7 @@
                     <tomcatUsers>tomcat/conf/tomcat-users.xml</tomcatUsers>
                     <tomcatLoggingFile>tomcat/conf/logging.properties</tomcatLoggingFile>
                     <tomcatWebXml>tomcat/conf/web.xml</tomcatWebXml>
+                    <path>/</path>
                     <charset>utf-8</charset>
                     <systemProperties>
                         <!--

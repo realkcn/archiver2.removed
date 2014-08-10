@@ -24,7 +24,6 @@
     <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager"
           p:cacheManager-ref="cacheManagerFactory"/>
 
-    <bean id="boardDAO" class="org.kbs.archiver.cache.BoardCache" init-method="initCache">
-        <property name="DBDAO" ref="boardDBDAO"/>
-    </bean>
+    <bean id="boardDAO" class="org.kbs.archiver.cache.BoardCache" init-method="initCache"/>
+    <bean id="threadDAO" class="org.kbs.archiver.dao.ThreadDAOImpl"/>
 </beans>

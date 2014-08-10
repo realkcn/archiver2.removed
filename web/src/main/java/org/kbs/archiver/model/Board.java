@@ -1,12 +1,20 @@
 package org.kbs.archiver.model;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 /**
  * Created by kcn on 14-6-17.
  */
 
-public class Board implements ModelHasID {
-    private long boardid;
+@Document
+public class Board {
 
+    @Id
+    private String boardid;
+
+    @Indexed
     private String name;
 
     private int threads;
@@ -45,11 +53,11 @@ public class Board implements ModelHasID {
         lastdeleteid = template.lastdeleteid;
     }
 
-    public long getBoardid() {
+    public String getBoardid() {
         return boardid;
     }
 
-    public void setBoardid(long boardid) {
+    public void setBoardid(String boardid) {
         this.boardid = boardid;
     }
 
@@ -131,13 +139,5 @@ public class Board implements ModelHasID {
 
     public void setLastdeleteid(long lastdeleteid) {
         this.lastdeleteid = lastdeleteid;
-    }
-
-    /**
-     * @return board id
-     */
-    @Override
-    public long getId() {
-        return getBoardid();
     }
 }

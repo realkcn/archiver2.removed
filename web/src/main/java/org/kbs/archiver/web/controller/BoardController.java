@@ -20,13 +20,13 @@ public class BoardController {
 
     /**
      * Get list of boards.
-     * 
+     *
      * @param model unuse
      * @return "listboard" for result
      */
     @RequestMapping("/listboard.do")
     public String getAll(Model model) {
-        model.addAttribute("boards", boardDAO.selectAll());
+        model.addAttribute("boards", boardDAO.findAll());
         return "listboard";
     }
 
