@@ -44,10 +44,10 @@
                 <c:choose>
                     <c:when test="${loopstatus.count==1}">
                         <c:set var="boardarray"
-                               value="{value:'${board.name} ${board.cname}',label:'${board.name} ${board.cname}',id:${board.boardid}}"/>
+                               value="{value:'${board.name} ${board.cname}',label:'${board.name} ${board.cname}',id:'${board.boardid}'}"/>
                     </c:when><c:otherwise>
                     <c:set var="boardarray"
-                           value="${boardarray},{value:'${board.name} ${board.cname}',label:'${board.name} ${board.cname}',id:${board.boardid}}"/>
+                           value="${boardarray},{value:'${board.name} ${board.cname}',label:'${board.name} ${board.cname}',id:'${board.boardid}'}"/>
                 </c:otherwise>
                 </c:choose>
                 <tr>
