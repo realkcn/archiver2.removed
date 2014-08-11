@@ -17,7 +17,7 @@ import java.util.List;
 public interface BoardDAO {
     //    @Lang(RawLanguageDriver.class)
 //    @Select("SELECT * FROM board where ishidden=false order by boardid asc")
-    public java.lang.Iterable<Board> findAll();
+    public List<Board> findAll();
 
     //
 //    @Lang(RawLanguageDriver.class)
@@ -40,4 +40,8 @@ public interface BoardDAO {
     public void save(Board board);
 
     public int count();
+
+    int countVisible();
+
+    public List<Board> findAllVisible();
 }

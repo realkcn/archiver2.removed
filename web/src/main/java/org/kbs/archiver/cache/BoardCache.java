@@ -127,6 +127,7 @@ public class BoardCache implements BoardDAO {
     /**
      * @return List of visible boards
      */
+    @Override
     public List<Board> findAllVisible() {
         if (!caching)
             initCache();
@@ -189,5 +190,10 @@ public class BoardCache implements BoardDAO {
     @Override
     public int count() {
         return boards.size();
+    }
+
+    @Override
+    public int countVisible() {
+        return visibleboardlist.size();
     }
 }

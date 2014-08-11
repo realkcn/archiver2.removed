@@ -33,6 +33,9 @@ public class BoardDAOTest {
 
     @Before
     public void setUp() throws Exception {
+        if (boardDAO.count()>5) {
+            fail("Board count greater than five.Are you sure it's database for test?");
+        }
         mongoTemplate.dropCollection(Board.class);
         Board testBoard = new Board();
         testBoard.setArticles(2763);
@@ -59,12 +62,26 @@ public class BoardDAOTest {
         testBoard.setSection("站务");
         testBoard.setThreads(11744);
         boardDAO.save(testBoard);
+
+        testBoard.setBoardid(null);
+        testBoard.setArticles(2860);
+        testBoard.setCname("隐藏版面");
+        testBoard.setGroupid("0");
+        testBoard.setIgnored(false);
+        testBoard.setIshidden(true);
+        testBoard.setLastarticleid(0);
+        testBoard.setLastdeleteid(0);
+        testBoard.setName("隐藏版面");
+        testBoard.setSection("站务");
+        testBoard.setThreads(11744);
+        boardDAO.save(testBoard);
     }
 
     @Test
     @Category(StableTest.class)
     public void testCacheSelectAllDao() {
-        assertEquals(boardDAO.count(), 2);
+        assertEquals(boardDAO.count(), 3);
+        assertEquals(boardDAO.countVisible(), 3);
     }
 
     @Test

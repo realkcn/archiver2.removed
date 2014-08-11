@@ -26,7 +26,7 @@ public class BoardController {
      */
     @RequestMapping("/listboard.do")
     public String getAll(Model model) {
-        model.addAttribute("boards", boardDAO.findAll());
+        model.addAttribute("boards", boardDAO.findAllVisible());
         return "listboard";
     }
 
