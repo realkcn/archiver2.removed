@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component("migrateService")
@@ -57,9 +58,11 @@ public class MigrateService {
     public void moveThread(String boardname) {
         BoardEntity boardEntity = boardMapper.getByName(boardname);
         List<ThreadEntity> oldthreads = threadMapper.getThreadsOnBoard(boardEntity.getBoardid());
+        List<Thread> newthreads = new ArrayList<>();
         for (ThreadEntity oldthread : oldthreads) {
             Thread thread = Convert(oldthread);
-            threadRepository.save(thread);
+            newthreads.add(thread);
         }
+        threadRepository.save(newthreads);
     }
 }
