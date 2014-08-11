@@ -5,12 +5,6 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.0.xsd">
     <task:annotation-driven/>
-    <bean id="boardCacheExpireJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-        <!--suppress SpringModelInspection -->
-        <property name="targetObject" ref="boardDAO"/>
-        <!--suppress SpringModelInspection -->
-        <property name="targetMethod" value="expireAll"/>
-    </bean>
     <bean id="boardCacheExpireTriger" class="org.springframework.scheduling.quartz.CronTriggerBean">
         <property name="jobDetail">
             <ref bean="boardCacheExpireJob"/>

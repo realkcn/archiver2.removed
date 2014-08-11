@@ -26,4 +26,10 @@
 
     <bean id="boardDAO" class="org.kbs.archiver.cache.BoardCache" init-method="initCache"/>
     <bean id="threadDAO" class="org.kbs.archiver.dao.ThreadDAOImpl"/>
+    <bean id="boardCacheExpireJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="boardDAO"/>
+        <!--suppress SpringModelInspection -->
+        <property name="targetMethod" value="expireAll"/>
+    </bean>
+
 </beans>

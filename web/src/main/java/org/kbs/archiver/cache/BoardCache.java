@@ -96,9 +96,9 @@ public class BoardCache implements BoardDAO {
                 ArrayList<Board> newboardlist = new ArrayList<>();
                 Iterable<Board> newboards = dbDAO.findAll();
                 for (Board board : newboards) {
+                    LOG.debug("put " + ToStringBuilder.reflectionToString(board));
                     newidMap.put(board.getBoardid(), board);
                     newnameMap.put(board.getName().toLowerCase(), board);
-                    LOG.debug("put " + ToStringBuilder.reflectionToString(board));
                     if (!board.isIshidden())
                         newvisibleboardlist.add(board);
                     newboardlist.add(board);
@@ -183,8 +183,42 @@ public class BoardCache implements BoardDAO {
     public void save(Board board) {
         LOG.debug("update board" + ToStringBuilder.reflectionToString(board));
         dbDAO.save(board);
-        getStatistics().incExpiredCount();
-        expireAll();
+        Board oldboard=findById(board.getBoardid());
+        if (oldboard==null) {
+            synchronized (BoardCache.class) {
+                oldboard=idMap.get(board.getBoardid());
+                if (oldboard==null) {
+                    Board newboard=new Board(board);
+                    LOG.debug("add board cache" + ToStringBuilder.reflectionToString(newboard));
+                    boards.add(newboard);
+                    if (!newboard.isIshidden())
+                        visibleboardlist.add(newboard);
+                    idMap.put(newboard.getBoardid(), newboard);
+                    nameMap.put(newboard.getName().toLowerCase(), newboard);
+                } else
+                    expireAll();
+            }
+        } else if (board.getName().equals(oldboard.getName())
+                &&(board.isIshidden()==oldboard.isIshidden())) {
+            synchronized (BoardCache.class) {
+                oldboard=idMap.get(board.getBoardid());
+                if (oldboard!=null) {
+                    Board newboard=new Board(board);
+                    LOG.debug("add board cache" + ToStringBuilder.reflectionToString(newboard));
+                    boards.remove(oldboard);
+                    boards.add(newboard);
+                    if (!oldboard.isIshidden()) {
+                        visibleboardlist.remove(oldboard);
+                        visibleboardlist.add(newboard);
+                    }
+                    idMap.put(newboard.getBoardid(), newboard);
+                    nameMap.put(newboard.getName().toLowerCase(), newboard);
+                    getStatistics().incExpiredCount();
+                } else
+                    expireAll();
+            }
+        } else
+            expireAll();
     }
 
     @Override

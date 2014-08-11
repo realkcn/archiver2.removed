@@ -40,6 +40,10 @@ public class Board {
     }
 
     public Board(Board template) {
+        clone(template);
+    }
+
+    public void clone(Board template) {
         boardid = template.boardid;
         name = template.name;
         threads = template.threads;
