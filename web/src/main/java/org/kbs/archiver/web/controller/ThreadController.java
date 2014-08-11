@@ -1,7 +1,9 @@
 package org.kbs.archiver.web.controller;
 
-import org.kbs.archiver.dao.BoardDAO;
-import org.kbs.archiver.dao.ThreadDAO;
+import org.kbs.archiver.cache.BoardCache;
+import org.kbs.archiver.repositories.ThreadRepository;
+import org.kbs.archiver.repositories.ThreadRepositoryCustom;
+import org.kbs.archiver.service.ThreadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,22 +19,23 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class ThreadController {
 
     @Autowired
-    private ThreadDAO threadDAO;
+    private ThreadService threadService;
 
     @Autowired
-    private BoardDAO boardDAO;
+    private BoardCache boardCache;
 
     /**
      * Get list of boards.
+     *
      * @param boardid board id
-     * @param pageno page number
-     * @param model unuse
+     * @param pageno  page number
+     * @param model   unuse
      * @return "listboard" for result
      */
-    @RequestMapping(value="/listthread.do",method = RequestMethod.GET)
-    public String getByBoard(@RequestParam("boardid")long boardid,
-            @RequestParam(value="pageno",required = false)long pageno,
-            Model model) {
+    @RequestMapping(value = "/listthread.do", method = RequestMethod.GET)
+    public String getByBoard(@RequestParam("boardid") long boardid,
+                             @RequestParam(value = "pageno", required = false) long pageno,
+                             Model model) {
         return "listthread";
     }
 

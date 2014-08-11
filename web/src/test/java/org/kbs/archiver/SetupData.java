@@ -6,8 +6,8 @@ package org.kbs.archiver;/**
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.kbs.archiver.cache.BoardCache;
-import org.kbs.archiver.dao.BoardDAO;
 import org.kbs.archiver.model.Board;
+import org.kbs.archiver.repositories.BoardRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -20,18 +20,22 @@ import static org.junit.Assert.fail;
 public class SetupData {
     private static final Logger LOG = LoggerFactory.getLogger(SetupData.class);
 
-    @Resource(name = "boardDAO")
-    private BoardDAO boardDAO;
+    @Resource
+    private BoardRepository boardRepository;
+
+    @Resource
+    private BoardCache boardCache;
 
     @Resource
     private MongoTemplate mongoTemplate;
 
     public void SetupBoard() {
-        if (boardDAO.count()>5) {
+        if (boardCache.count() > 5) {
             fail("Board count greater than five.Are you sure it's database for test?");
         }
+        LOG.info("setup board collection...");
         mongoTemplate.dropCollection(Board.class);
-        ((BoardCache)boardDAO).expireAll();
+        boardCache.expireAll();
         Board testBoard = new Board();
         testBoard.setArticles(2763);
         testBoard.setCname("站务公告栏");
@@ -43,7 +47,7 @@ public class SetupData {
         testBoard.setName("Announce");
         testBoard.setSection("站务");
         testBoard.setThreads(2739);
-        boardDAO.save(testBoard);
+        boardCache.save(testBoard);
 
         testBoard.setBoardid(null);
         testBoard.setArticles(28608);
@@ -56,7 +60,7 @@ public class SetupData {
         testBoard.setName("Test");
         testBoard.setSection("站务");
         testBoard.setThreads(11744);
-        boardDAO.save(testBoard);
+        boardCache.save(testBoard);
 
         testBoard.setBoardid(null);
         testBoard.setArticles(2860);
@@ -69,7 +73,7 @@ public class SetupData {
         testBoard.setName("Hidden");
         testBoard.setSection("站务");
         testBoard.setThreads(11744);
-        boardDAO.save(testBoard);
+        boardCache.save(testBoard);
 
     }
 }

@@ -1,20 +1,17 @@
-package org.kbs.archiver.dao;
+package org.kbs.archiver.repositories;
 
-import com.mongodb.WriteResult;
 import org.kbs.archiver.model.Board;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
- * Created by kcn on 14-6-17.
+ * Created by kcn on 14-8-10.
  */
 
 @Repository
-@NoRepositoryBean
-public interface BoardDAO {
+public interface BoardRepository extends CrudRepository<Board, String> {
     //    @Lang(RawLanguageDriver.class)
 //    @Select("SELECT * FROM board where ishidden=false order by boardid asc")
     public List<Board> findAll();
@@ -32,16 +29,14 @@ public interface BoardDAO {
     //
 //    @Lang(RawLanguageDriver.class)
 //    @Select("Select * From board Where boardid=#{boardid} and ishidden=false")
-    public Board findById(String boardid);
+    public Board findByBoardid(String boardid);
 
     //
 //    @Lang(RawLanguageDriver.class)
 //    @Update("update board set name=#{name},cname=#{cname},threads=#{threads},articles=#{articles},ishidden=#{ishidden},groupid=#{groupid},section=#{section},ignored=#{ignored} where boardid=#{boardid}")
-    public void save(Board board);
+    public Board save(Board board);
 
-    public int count();
+//    int countVisible();
 
-    int countVisible();
-
-    public List<Board> findAllVisible();
+//    public List<Board> findAllVisible();
 }

@@ -14,7 +14,7 @@ public class Board {
     @Id
     private String boardid;
 
-    @Indexed
+    @Indexed(unique = true)
     private String name;
 
     private int threads;

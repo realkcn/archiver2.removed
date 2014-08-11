@@ -1,9 +1,6 @@
-package org.kbs.archiver.dao;
+package org.kbs.archiver.repositories;
 
-import org.apache.ibatis.annotations.Lang;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.scripting.defaults.RawLanguageDriver;
+import org.kbs.archiver.model.*;
 
 import java.util.List;
 
@@ -11,8 +8,10 @@ import java.util.List;
  * Created by kcn on 14-6-17.
  */
 @SuppressWarnings("UnusedDeclaration")
-public interface ThreadDAO {
-    public Thread get(String threadid);
+public interface ThreadRepositoryCustom {
+    public List<org.kbs.archiver.model.Thread> MyCustomBatchOperation();
+//    public Thread myCustomBatchOperation(String threadid);
+//    public Thread get(String threadid);
 //    public Thread getByOriginId(@Param("boardid")long boardid,@Param("originid")long originid);
 //    public Thread getByEncodingUrl(String encodingurl);
 //

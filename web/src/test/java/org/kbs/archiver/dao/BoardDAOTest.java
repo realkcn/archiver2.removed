@@ -1,7 +1,6 @@
 package org.kbs.archiver.dao;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
@@ -11,9 +10,7 @@ import org.kbs.archiver.StableTest;
 import org.kbs.archiver.UnstableTest;
 import org.kbs.archiver.cache.BoardCache;
 import org.kbs.archiver.model.Board;
-import org.kbs.archiver.repositories.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -27,8 +24,8 @@ import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:spring-test.xml"})
 public class BoardDAOTest {
-    @Resource(name = "boardDAO")
-    private BoardDAO boardDAO;
+    @Resource
+    private BoardCache boardCache;
 
     @Resource
     private SetupData setupData;
@@ -41,29 +38,29 @@ public class BoardDAOTest {
     @Test
     @Category(StableTest.class)
     public void testCacheSelectAllDao() {
-        assertEquals(boardDAO.count(), 3);
-        assertEquals(boardDAO.countVisible(), 2);
+        assertEquals(boardCache.count(), 3);
+        assertEquals(boardCache.countVisible(), 2);
     }
 
     @Test
     @Category(UnstableTest.class)
     public void testUpdate() {
         String boardname = "Test";
-        Board oldboard = new Board(boardDAO.findByName(boardname));
+        Board oldboard = new Board(boardCache.findByName(boardname));
 
         assertEquals("测试专用版面", oldboard.getCname());
         assertEquals("站务", oldboard.getSection());
         Board newboard1 = new Board(oldboard);
         newboard1.setArticles(oldboard.getArticles() + 1);
-        boardDAO.save(newboard1);
+        boardCache.save(newboard1);
 
-        Board newboard = boardDAO.findByName(boardname);
+        Board newboard = boardCache.findByName(boardname);
         assertEquals("测试专用版面", newboard.getCname());
         assertEquals("站务", newboard.getSection());
         assertEquals(oldboard.getArticles() + 1, newboard.getArticles());
-        boardDAO.save(oldboard);
+        boardCache.save(oldboard);
 
-        newboard = boardDAO.findByName(boardname);
+        newboard = boardCache.findByName(boardname);
         assertEquals(oldboard.getArticles(), newboard.getArticles());
     }
 
@@ -73,19 +70,19 @@ public class BoardDAOTest {
         try {
             String boardname = "Test";
 
-            assertNull(boardDAO.findByName("failddd"));
+            assertNull(boardCache.findByName("failddd"));
 
             // test get board by name
-            Board board = boardDAO.findByName(boardname);
+            Board board = boardCache.findByName(boardname);
             assertEquals(board.getName(), "Test");
-            boardDAO.findByName(boardname);
+            boardCache.findByName(boardname);
 
             // test get board by id
             boardname = "Announce";
-            Board board1 = boardDAO.findByName(boardname);
-            board = boardDAO.findById(board1.getBoardid());
+            Board board1 = boardCache.findByName(boardname);
+            board = boardCache.findByBoardid(board1.getBoardid());
             assertEquals(board.getName(), "Announce");
-            boardDAO.findById(board1.getBoardid());
+            boardCache.findByBoardid(board1.getBoardid());
         } catch (Exception e) {
             e.printStackTrace();
             fail("Test failed!");
@@ -114,15 +111,15 @@ public class BoardDAOTest {
         }
     }
 
-    @Category({ SlowTest.class })
+    @Category({SlowTest.class})
     @Test
     public void testScheduleExpired() throws Exception {
         long currenttime = System.currentTimeMillis();
         //schedulerFactory.scheduleJob(boardCacheExpireJob, trigger);
         ExecutorService executorService = Executors.newFixedThreadPool(100);
 
-        long savehitcount = ((BoardCache) boardDAO).getStatistics().getHitCount();
-        long savemisscount = ((BoardCache) boardDAO).getStatistics().getMissCount();
+        long savehitcount = boardCache.getStatistics().getHitCount();
+        long savemisscount = boardCache.getStatistics().getMissCount();
 
         for (int i = 0; i < 100; i++) {
             Task task = new Task();
@@ -133,13 +130,13 @@ public class BoardDAOTest {
             Thread.sleep(1000);
         }
         stopRunning = true;
-        if (!executorService.awaitTermination(10,TimeUnit.SECONDS)) {
+        if (!executorService.awaitTermination(10, TimeUnit.SECONDS)) {
             System.out.print("Execute Time Out!");
         }
 
         System.out.println("Run Count:" + count);
-        long hitcount = ((BoardCache) boardDAO).getStatistics().getHitCount()-savehitcount;
-        long misscount = ((BoardCache) boardDAO).getStatistics().getMissCount()-savemisscount;
+        long hitcount = boardCache.getStatistics().getHitCount() - savehitcount;
+        long misscount = boardCache.getStatistics().getMissCount() - savemisscount;
         System.out.println("Cache Hit Count:" + hitcount);
         System.out.println("Cache Miss Count:" + misscount);
         System.out.println("Cache Hit Rate:" + ((double) hitcount) / (misscount + hitcount));
@@ -161,7 +158,7 @@ public class BoardDAOTest {
             Thread.sleep(1000);
         }
         stopRunning = true;
-        if (!executorService.awaitTermination(10,TimeUnit.SECONDS)) {
+        if (!executorService.awaitTermination(10, TimeUnit.SECONDS)) {
             System.out.print("Execute Time Out!");
         }
     }

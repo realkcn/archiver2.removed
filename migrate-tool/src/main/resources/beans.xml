@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- spring.xml for testing! root eliment -->
+<!--suppress ALL -->
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mongo="http://www.springframework.org/schema/data/mongo"
        xsi:schemaLocation="
-			http://www.springframework.org/schema/beans
-			http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
-			http://www.springframework.org/schema/context
-            http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+          http://www.springframework.org/schema/data/mongo
+          http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
+          http://www.springframework.org/schema/beans
+		  http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
-    <bean id="configproperties"
-          class="org.springframework.beans.factory.config.PropertiesFactoryBean">
-        <property name="location" value="classpath:archiver.properties"/>
+    <bean id="configProperties" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="ignoreResourceNotFound" value="true"/>
+        <property name="locations">
+            <list>
+                <value>classpath:archiver.properties</value>
+                <value>classpath:archiver.conf</value>
+                <value>classpath:archiver.local.conf</value>
+                <value>file:/etc/archiver.conf</value>
+            </list>
+        </property>
     </bean>
-    <bean id="propertyConfigurer"
-          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="properties" ref="configproperties"/>
-    </bean>
-    <!-- 用注解方式注入bean -->
-    <context:annotation-config/>
-    <context:component-scan base-package="org.kbs.archiver.*"/>
     <!--创建jdbc数据源
     <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
         <property name="jndiName" value="jdbc/kbsDB"></property>
@@ -113,4 +113,44 @@
         <property name="mapperInterface" value="org.kbs.archiver.persistence.FrontPageMapper"/>
         <property name="sqlSessionTemplate" ref="sqlSession"/>
     </bean>
+
+    <mongo:mongo host="${mongodb.host}" port="${mongodb.port}">
+        <mongo:options connections-per-host="8"
+                       threads-allowed-to-block-for-connection-multiplier="4"
+                       connect-timeout="1000"
+                       max-wait-time="1500"
+                       auto-connect-retry="true"
+                       socket-keep-alive="true"
+                       socket-timeout="1500"
+                       slave-ok="true"
+                       write-number="1"
+                       write-timeout="0"
+                       write-fsync="true"/>
+    </mongo:mongo>
+    <!--suppress SpringModelInspection -->
+    <mongo:db-factory dbname="${mongodb.database}" mongo-ref="mongo" username="${mongodb.user}"
+                      password="${mongodb.password}"/>
+
+    <bean id="mappingContext" class="org.springframework.data.mongodb.core.mapping.MongoMappingContext"/>
+    <bean id="mappingMongoConverter" class="org.springframework.data.mongodb.core.convert.MappingMongoConverter">
+        <!--suppress SpringModelInspection -->
+        <constructor-arg name="mongoDbFactory" ref="mongoDbFactory"/>
+        <constructor-arg name="mappingContext" ref="mappingContext"/>
+        <property name="typeMapper" ref="defaultMongoTypeMapper"/>
+    </bean>
+
+    <bean id="defaultMongoTypeMapper" class="org.springframework.data.mongodb.core.convert.DefaultMongoTypeMapper">
+        <constructor-arg name="typeKey">
+            <null/>
+            <!-- 这里设置为空,可以把 spring data mongodb 多余保存的_class字段去掉 -->
+        </constructor-arg>
+    </bean>
+    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+        <!--suppress SpringModelInspection -->
+        <constructor-arg name="mongoDbFactory" ref="mongoDbFactory"/>
+        <constructor-arg name="mongoConverter" ref="mappingMongoConverter"/>
+    </bean>
+    <mongo:repositories base-package="org.kbs.archiver.repositories"/>
+
+    <bean id="migrateService" class="org.kbs.archiver.MigrateService"/>
 </beans>

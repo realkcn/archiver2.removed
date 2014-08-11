@@ -5,8 +5,6 @@ package org.kbs.archiver.web.controller;
  */
 
 import org.kbs.archiver.cache.BoardCache;
-import org.kbs.archiver.dao.BoardDAO;
-import org.kbs.archiver.model.Board;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller("boardController")
 public class BoardController {
     @Autowired
-    private BoardDAO boardDAO;
+    private BoardCache boardCache;
 
     /**
      * Get list of boards.
@@ -26,7 +24,7 @@ public class BoardController {
      */
     @RequestMapping("/listboard.do")
     public String getAll(Model model) {
-        model.addAttribute("boards", boardDAO.findAllVisible());
+        model.addAttribute("boards", boardCache.findAllVisible());
         return "listboard";
     }
 
@@ -39,10 +37,7 @@ public class BoardController {
     @RequestMapping("/admin/reloadboardcache.do")
     @ResponseBody
     public String reloadCache(Model model) {
-        if (boardDAO instanceof BoardCache) {
-            ((BoardCache) boardDAO).expireAll();
-            return "重新读入版面缓存";
-        }
-        return "未启用版面缓存";
+        boardCache.expireAll();
+        return "重新读入版面缓存";
     }
 }

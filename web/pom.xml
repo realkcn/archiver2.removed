@@ -15,35 +15,15 @@
     <packaging>war</packaging>
     <name>NewSMTH Archiver Webapp</name>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <org.springframework.version>4.0.5.RELEASE</org.springframework.version>
-        <org.mybatis.version>3.2.7</org.mybatis.version>
-        <org.mybatis.spring.version>1.2.2</org.mybatis.spring.version>
-        <org.slf4j.version>1.7.7</org.slf4j.version>
-        <ehcache.version>2.8.3</ehcache.version>
-        <logback.version>1.1.2</logback.version>
-        <mongo.version>2.12.3</mongo.version>
-        <urlrewritefilter.version>4.0.4</urlrewritefilter.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    </properties>
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-framework-bom</artifactId>
-                <version>${org.springframework.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
     <dependencies>
+        <dependency>
+            <groupId>org.kbs</groupId>
+            <artifactId>archiver-commons</artifactId>
+            <version>2.0-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-mongodb</artifactId>
-            <version>1.4.2.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.kbs</groupId>
@@ -52,14 +32,8 @@
             <classifier>client</classifier>
         </dependency>
         <dependency>
-            <groupId>org.kbs</groupId>
-            <artifactId>library</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
-            <version>3.2.1</version>
         </dependency>
         <dependency>
             <groupId>javax.servlet.jsp</groupId>
@@ -82,12 +56,6 @@
             <artifactId>javax.servlet-api</artifactId>
             <version>3.1.0</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.11</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>jstl</groupId>
@@ -116,19 +84,8 @@
             <version>${logback.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.mybatis</groupId>
-            <artifactId>mybatis</artifactId>
-            <version>${org.mybatis.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.mybatis</groupId>
-            <artifactId>mybatis-spring</artifactId>
-            <version>${org.mybatis.spring.version}</version>
-        </dependency>
-        <dependency>
             <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache</artifactId>
-            <version>${ehcache.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>

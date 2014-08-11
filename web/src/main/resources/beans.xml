@@ -6,9 +6,7 @@
           http://www.springframework.org/schema/data/mongo
           http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
           http://www.springframework.org/schema/beans
-		  http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-          http://www.springframework.org/schema/data/jpa
-          http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+		  http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
 
     <mongo:mongo host="${mongodb.host}" port="${mongodb.port}">
@@ -27,18 +25,25 @@
     <!--suppress SpringModelInspection -->
     <mongo:db-factory dbname="${mongodb.database}" mongo-ref="mongo" username="${mongodb.user}"
                       password="${mongodb.password}"/>
+
+    <bean id="mappingContext" class="org.springframework.data.mongodb.core.mapping.MongoMappingContext"/>
+    <bean id="mappingMongoConverter" class="org.springframework.data.mongodb.core.convert.MappingMongoConverter">
+        <!--suppress SpringModelInspection -->
+        <constructor-arg name="mongoDbFactory" ref="mongoDbFactory"/>
+        <constructor-arg name="mappingContext" ref="mappingContext"/>
+        <property name="typeMapper" ref="defaultMongoTypeMapper"/>
+    </bean>
+
+    <bean id="defaultMongoTypeMapper" class="org.springframework.data.mongodb.core.convert.DefaultMongoTypeMapper">
+        <constructor-arg name="typeKey">
+            <null/>
+            <!-- 这里设置为空,可以把 spring data mongodb 多余保存的_class字段去掉 -->
+        </constructor-arg>
+    </bean>
     <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
         <!--suppress SpringModelInspection -->
         <constructor-arg name="mongoDbFactory" ref="mongoDbFactory"/>
+        <constructor-arg name="mongoConverter" ref="mappingMongoConverter"/>
     </bean>
     <mongo:repositories base-package="org.kbs.archiver.repositories"/>
-
-    <!--
-        declare timer bean
-    <bean id="boardCacheExpireJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-        <property name="targetObject" ref="boardDAO"/>
-        <property name="targetMethod" value="expireAll"/>
-    </bean>
-    -->
-
 </beans>

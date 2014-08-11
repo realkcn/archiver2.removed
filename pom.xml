@@ -10,6 +10,7 @@
     <modules>
         <module>migrate-tool</module>
         <module>web</module>
+        <module>commons</module>
     </modules>
     <packaging>pom</packaging>
     <name>NewSMTH Archiver Webapp</name>
@@ -27,8 +28,28 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>kcnnexus</id>
+            <name>kcn nexus</name>
+            <url>http://nexus.kcn.cn/content/repositories/releases/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>commons-collections</groupId>
+                <artifactId>commons-collections</artifactId>
+                <version>3.2.1</version>
+            </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-framework-bom</artifactId>
@@ -90,9 +111,24 @@
                 <artifactId>ehcache</artifactId>
                 <version>${ehcache.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-mongodb</artifactId>
+                <version>1.4.2.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>net.sf.ehcache</groupId>
+                <artifactId>ehcache</artifactId>
+                <version>${ehcache.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <dependencies>
+        <dependency>
+            <groupId>org.kbs</groupId>
+            <artifactId>library</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
@@ -188,4 +224,16 @@
             </plugin>
         </plugins>
     </build>
+    <distributionManagement>
+        <repository>
+            <id>kcnnexus</id>
+            <name>kcn nexus</name>
+            <url>http://nexus.kcn.cn/content/repositories/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>kcnnexus</id>
+            <name>kcn nexus</name>
+            <url>http://nexus.kcn.cn/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>
