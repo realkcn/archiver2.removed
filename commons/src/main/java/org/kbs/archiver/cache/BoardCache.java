@@ -2,6 +2,7 @@ package org.kbs.archiver.cache;
 
 import com.mongodb.WriteResult;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.bson.types.ObjectId;
 import org.kbs.archiver.model.Board;
 import org.kbs.archiver.repositories.BoardRepository;
 import org.slf4j.Logger;
@@ -50,7 +51,7 @@ public class BoardCache {
 
     private ArrayList<Board> visibleboardlist = new ArrayList<>();
 
-    private HashMap<String, Board> idMap = new HashMap<>();
+    private HashMap<ObjectId, Board> idMap = new HashMap<>();
 
     private HashMap<String, Board> nameMap = new HashMap<>();
 
@@ -89,7 +90,7 @@ public class BoardCache {
         synchronized (BoardCache.class) {
             if (!caching) {
                 LOG.info("init board cache");
-                HashMap<String, Board> newidMap = new HashMap<>();
+                HashMap<ObjectId, Board> newidMap = new HashMap<>();
                 HashMap<String, Board> newnameMap = new HashMap<>();
                 ArrayList<Board> newvisibleboardlist = new ArrayList<>();
                 ArrayList<Board> newboardlist = new ArrayList<>();
@@ -156,7 +157,7 @@ public class BoardCache {
      * @param boardid board's id
      * @return board
      */
-    public Board findByBoardid(String boardid) {
+    public Board findByBoardid(ObjectId boardid) {
         if (!caching) {
             initCache();
         }

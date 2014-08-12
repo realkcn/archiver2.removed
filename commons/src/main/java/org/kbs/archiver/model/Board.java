@@ -1,5 +1,6 @@
 package org.kbs.archiver.model;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -12,7 +13,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Board {
 
     @Id
-    private String boardid;
+    private ObjectId boardid;
 
     @Indexed(unique = true)
     private String name;
@@ -57,11 +58,11 @@ public class Board {
         lastdeleteid = template.lastdeleteid;
     }
 
-    public String getBoardid() {
+    public ObjectId getBoardid() {
         return boardid;
     }
 
-    public void setBoardid(String boardid) {
+    public void setBoardid(ObjectId boardid) {
         this.boardid = boardid;
     }
 

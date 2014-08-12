@@ -3,6 +3,7 @@ package org.kbs.archiver.service;
  * Created by kcn on 14-7-24.
  */
 
+import org.bson.types.ObjectId;
 import org.kbs.archiver.cache.BoardCache;
 import org.kbs.archiver.model.Article;
 import org.kbs.archiver.model.Board;
@@ -30,7 +31,7 @@ public class ThreadService {
     @Autowired
     private BoardCache boardCache;
 
-    public Thread newThread(String threadid, Board board, Article article) {
+    public Thread newThread(ObjectId threadid, Board board, Article article) {
         Thread thread = new Thread();
         thread.setThreadid(threadid);
         thread.setArticlenumber(1);// 考虑最后再插入
@@ -40,7 +41,7 @@ public class ThreadService {
         thread.setLastreply(article.getAuthor());
         thread.setPosttime(article.getPosttime());
         thread.setSubject(article.getSubject());
-        thread.setEncodingurl(threadid);
+        thread.setEncodingurl(threadid.toString());
         thread.setOriginid(article.getOriginid());
         return thread;
         // thread.setThreadid()

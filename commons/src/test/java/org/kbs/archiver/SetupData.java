@@ -4,16 +4,18 @@ package org.kbs.archiver;/**
  * Time: 下午5:32
  */
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.kbs.archiver.cache.BoardCache;
 import org.kbs.archiver.model.Board;
+import org.kbs.archiver.model.Thread;
 import org.kbs.archiver.repositories.BoardRepository;
+import org.kbs.archiver.repositories.ThreadRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 import javax.annotation.Resource;
+
+import java.util.Date;
 
 import static org.junit.Assert.fail;
 
@@ -22,6 +24,9 @@ public class SetupData {
 
     @Resource
     private BoardRepository boardRepository;
+
+    @Resource
+    private ThreadRepository threadRepository;
 
     @Resource
     private BoardCache boardCache;
@@ -74,6 +79,16 @@ public class SetupData {
         testBoard.setSection("站务");
         testBoard.setThreads(11744);
         boardCache.save(testBoard);
-
+    }
+    public void SetupThread() {
+        LOG.info("setup thread collection...");
+        mongoTemplate.dropCollection(Thread.class);
+        Thread newthread=new Thread();
+        newthread.setArticlenumber(0);
+        newthread.setAuthor("faint");
+        newthread.setEncodingurl("fdasfdas");
+        newthread.setLastposttime(new Date());
+        newthread.setBoardid(boardRepository.findByName("Test").getBoardid());
+        threadRepository.save(newthread);
     }
 }

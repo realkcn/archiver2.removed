@@ -17,7 +17,7 @@
             http://www.springframework.org/schema/tool http://www.springframework.org/schema/tool/spring-tool.xsd
             http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd"
        default-lazy-init="true">
-    <context:component-scan base-package="org.kbs.archiver.dao"/>
+    <context:component-scan base-package="org.kbs.archiver.cache"/>
     <cache:annotation-driven cache-manager="cacheManager"/>
     <bean id="cacheManagerFactory" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"
           p:configLocation="classpath:ehcache.xml" p:shared="true"/>

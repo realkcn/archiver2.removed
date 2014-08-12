@@ -1,6 +1,6 @@
 package org.kbs.archiver.model;
 
-import org.kbs.library.Converter;
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
@@ -17,9 +17,9 @@ import java.util.Date;
 })
 public class Thread {
     @Id
-    private String threadid;
+    private ObjectId threadid;
 
-    private String boardid;
+    private ObjectId boardid;
 
     private String subject;
 
@@ -40,10 +40,10 @@ public class Thread {
     private boolean isvisible = true;
 
     public String getBoardid() {
-        return boardid;
+        return boardid.toString();
     }
 
-    public void setBoardid(String boardid) {
+    public void setBoardid(ObjectId boardid) {
         this.boardid = boardid;
     }
 
@@ -95,11 +95,11 @@ public class Thread {
         this.lastposttime = lastposttime;
     }
 
-    public String getThreadid() {
+    public ObjectId getThreadid() {
         return threadid;
     }
 
-    public void setThreadid(String threadid) {
+    public void setThreadid(ObjectId threadid) {
         this.threadid = threadid;
     }
 
