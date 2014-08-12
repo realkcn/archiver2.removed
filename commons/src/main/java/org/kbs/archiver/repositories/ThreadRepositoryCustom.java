@@ -1,5 +1,6 @@
 package org.kbs.archiver.repositories;
 
+import org.bson.types.ObjectId;
 import org.kbs.archiver.model.*;
 
 import java.util.List;
@@ -9,7 +10,9 @@ import java.util.List;
  */
 @SuppressWarnings("UnusedDeclaration")
 public interface ThreadRepositoryCustom {
-    public List<org.kbs.archiver.model.Thread> MyCustomBatchOperation();
+    public void addArticle(ObjectId threadid, ObjectId articleid);
+
+    public void removeArticle(ObjectId threadid, ObjectId articleid);
 //    public Thread myCustomBatchOperation(String threadid);
 //    public Thread get(String threadid);
 //    public Thread getByOriginId(@Param("boardid")long boardid,@Param("originid")long originid);

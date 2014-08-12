@@ -34,7 +34,9 @@ public interface BoardRepository extends CrudRepository<Board, String> {
     //
 //    @Lang(RawLanguageDriver.class)
 //    @Update("update board set name=#{name},cname=#{cname},threads=#{threads},articles=#{articles},ishidden=#{ishidden},groupid=#{groupid},section=#{section},ignored=#{ignored} where boardid=#{boardid}")
-    public Board save(Board board);
+
+    @Override
+    <S extends Board> S save(S entity);
 
 //    int countVisible();
 

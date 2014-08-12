@@ -106,7 +106,7 @@
                 <configuration>
                     <mainClass>org.kbs.archiver.MigrateTool</mainClass>
                     <executable>java</executable>
-                    <commandlineArgs>-b Test</commandlineArgs>
+                    <commandlineArgs>-a</commandlineArgs>
                 </configuration>
             </plugin>
         </plugins>

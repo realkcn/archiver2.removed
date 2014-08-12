@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -37,6 +38,22 @@ public class Thread {
     private boolean isvisible = true;
 
     List<ObjectId> articles;
+
+    public List<ObjectId> getArticles() {
+        return articles;
+    }
+
+    public void setArticles(List<ObjectId> articles) {
+        this.articles = articles;
+    }
+
+    public void addArticle(ObjectId articleid) {
+        this.articles.add(articleid);
+    }
+
+    public void removeArticle(ObjectId articleid) {
+        this.articles.remove(articleid);
+    }
 
     public String getBoardid() {
         return boardid.toString();

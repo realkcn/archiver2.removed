@@ -15,7 +15,6 @@ import org.kbs.archiver.model.Thread;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.mongodb.core.query.Order;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,7 +33,7 @@ public class ThreadService {
     public Thread newThread(ObjectId threadid, Board board, Article article) {
         Thread thread = new Thread();
         thread.setThreadid(threadid);
-        thread.setArticlenumber(1);// 考虑最后再插入
+//        thread.setArticlenumber(1);// 考虑最后再插入
         thread.setAuthor(article.getAuthor());
         thread.setBoardid(board.getBoardid());
         thread.setLastposttime(article.getPosttime());
@@ -42,7 +41,7 @@ public class ThreadService {
         thread.setPosttime(article.getPosttime());
         thread.setSubject(article.getSubject());
         thread.setEncodingurl(threadid.toString());
-        thread.setOriginid(article.getOriginid());
+//        thread.setOriginid(article.getOriginid());
         return thread;
         // thread.setThreadid()
     }

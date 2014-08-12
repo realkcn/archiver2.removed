@@ -1,6 +1,7 @@
 package org.kbs.archiver;
 
 import org.apache.commons.cli.*;
+import org.kbs.library.SimpleException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -14,13 +15,14 @@ import java.util.List;
 public class MigrateTool {
     private static final Logger LOG = LoggerFactory
             .getLogger(MigrateTool.class);
+
     public static void main(String[] arg) {
         ApplicationContext context =
                 new ClassPathXmlApplicationContext("classpath:spring.xml");
         MigrateService service = (MigrateService) context.getBean("migrateService");
 
         Options options = new Options();
-        options.addOption("h", "help",  false, "print help for the command.");
+        options.addOption("h", "help", false, "print help for the command.");
         options.addOption("a", "all", false, "Migrate all automatic.");
         options.addOption(OptionBuilder.withArgName("board")
                 .hasArg()
@@ -34,15 +36,20 @@ public class MigrateTool {
         CommandLine cl = null;
         try {
             // 处理Options和参数
-            cl = parser.parse( options, arg );
+            cl = parser.parse(options, arg);
         } catch (ParseException e) {
-            formatter.printHelp( formatstr, options ); // 如果发生异常，则打印出帮助信息
+            formatter.printHelp(formatstr, options); // 如果发生异常，则打印出帮助信息
         }
 
         if (cl.hasOption('a')) {
             service.migrateAll();
         } else if (cl.hasOption('b')) {
-            service.moveThread(cl.getOptionValue('b'));
+            String boardname = cl.getOptionValue('b');
+            try {
+                service.migrateBoardInfo(boardname);
+                service.moveThread(boardname);
+            } catch (SimpleException e) {
+            }
         }
     }
 }
