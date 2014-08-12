@@ -1,16 +1,22 @@
 package org.kbs.archiver.model;
 
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.util.Date;
 
 /**
  * Created by kcn on 14-6-17.
  */
+@Document
 public class Article {
-    private long boardid;
+    @Id
+    private ObjectId articleid;
 
-    private long threadid;
+    private ObjectId boardid;
 
-    private long articleid;
+    private ObjectId threadid;
 
     private String author;
 
@@ -22,37 +28,31 @@ public class Article {
 
     private boolean isvisible;
 
-    private long originid;
-
-    private String filename;
-
-    private long replyid;
-
     private int datasize;
 
-    private String boardname;
+    private String body;
 
-    public long getBoardid() {
+    public ObjectId getBoardid() {
         return boardid;
     }
 
-    public void setBoardid(long boardid) {
+    public void setBoardid(ObjectId boardid) {
         this.boardid = boardid;
     }
 
-    public long getThreadid() {
+    public ObjectId getThreadid() {
         return threadid;
     }
 
-    public void setThreadid(long threadid) {
+    public void setThreadid(ObjectId threadid) {
         this.threadid = threadid;
     }
 
-    public long getArticleid() {
+    public ObjectId getArticleid() {
         return articleid;
     }
 
-    public void setArticleid(long articleid) {
+    public void setArticleid(ObjectId articleid) {
         this.articleid = articleid;
     }
 
@@ -96,30 +96,6 @@ public class Article {
         this.isvisible = isvisible;
     }
 
-    public long getOriginid() {
-        return originid;
-    }
-
-    public void setOriginid(long originid) {
-        this.originid = originid;
-    }
-
-    public String getFilename() {
-        return filename;
-    }
-
-    public void setFilename(String filename) {
-        this.filename = filename;
-    }
-
-    public long getReplyid() {
-        return replyid;
-    }
-
-    public void setReplyid(long replyid) {
-        this.replyid = replyid;
-    }
-
     public int getDatasize() {
         return datasize;
     }
@@ -128,12 +104,11 @@ public class Article {
         this.datasize = datasize;
     }
 
-    public String getBoardname() {
-        return boardname;
+    public String getBody() {
+        return body;
     }
 
-    public void setBoardname(String boardname) {
-        this.boardname = boardname;
+    public void setBody(String body) {
+        this.body = body;
     }
-
 }

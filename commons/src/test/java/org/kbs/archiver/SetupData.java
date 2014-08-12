@@ -84,7 +84,6 @@ public class SetupData {
         LOG.info("setup thread collection...");
         mongoTemplate.dropCollection(Thread.class);
         Thread newthread=new Thread();
-        newthread.setArticlenumber(0);
         newthread.setAuthor("faint");
         newthread.setEncodingurl("fdasfdas");
         newthread.setLastposttime(new Date());

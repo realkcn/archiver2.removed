@@ -33,7 +33,7 @@ public class ThreadController {
      * @return "listboard" for result
      */
     @RequestMapping(value = "/listthread.do", method = RequestMethod.GET)
-    public String getByBoard(@RequestParam("boardid") long boardid,
+    public String getByBoard(@RequestParam("boardid") String boardid,
                              @RequestParam(value = "pageno", required = false) long pageno,
                              Model model) {
         return "listthread";

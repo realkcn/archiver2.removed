@@ -1,0 +1,23 @@
+<configuration scan="true" scanPeriod="5 minutes">
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- encoder 默认配置为PatternLayoutEncoder -->
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="org" level="DEBUG" additivity="false">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+
+    <logger name="org.kbs" level="DEBUG" additivity="false">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+
+    <!-- jsp debug -->
+    <logger name="org.apache.jasper.compiler" level="DEBUG"/>
+
+    <root level="${loglevel}">
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>

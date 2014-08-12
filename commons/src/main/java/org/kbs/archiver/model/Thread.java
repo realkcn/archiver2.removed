@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by kcn on 14-6-17.
@@ -25,8 +26,6 @@ public class Thread {
 
     private Date posttime;
 
-    private int articlenumber;
-
     private String author;
 
     private String lastreply;
@@ -35,9 +34,9 @@ public class Thread {
 
     private String encodingurl;
 
-    private long originid;
-
     private boolean isvisible = true;
+
+    List<ObjectId> articles;
 
     public String getBoardid() {
         return boardid.toString();
@@ -61,14 +60,6 @@ public class Thread {
 
     public void setPosttime(Date posttime) {
         this.posttime = posttime;
-    }
-
-    public int getArticlenumber() {
-        return articlenumber;
-    }
-
-    public void setArticlenumber(int articlenumber) {
-        this.articlenumber = articlenumber;
     }
 
     public String getAuthor() {
@@ -109,14 +100,6 @@ public class Thread {
 
     public void setEncodingurl(String encodingurl) {
         this.encodingurl = encodingurl;
-    }
-
-    public long getOriginid() {
-        return originid;
-    }
-
-    public void setOriginid(long originid) {
-        this.originid = originid;
     }
 
     public boolean isIsvisible() {
