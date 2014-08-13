@@ -3,12 +3,14 @@ package org.kbs.archiver;
  * Created by kcn on 14-8-11.
  */
 
+import com.sun.xml.internal.ws.api.message.Attachment;
 import org.bson.types.ObjectId;
 import org.kbs.archiver.model.*;
 import org.kbs.archiver.model.Thread;
-import org.kbs.archiver.persistence.BoardMapper;
-import org.kbs.archiver.persistence.ThreadMapper;
+import org.kbs.archiver.persistence.*;
+import org.kbs.archiver.repositories.ArticleRepository;
 import org.kbs.archiver.repositories.BoardRepository;
+import org.kbs.archiver.repositories.OriginArticleInfoRepository;
 import org.kbs.archiver.repositories.ThreadRepository;
 import org.kbs.library.SimpleException;
 import org.slf4j.Logger;
@@ -37,13 +39,58 @@ public class MigrateService {
     private BoardMapper boardMapper;
 
     @Autowired
+    private ArticleBodyMapper articleBodyMapper;
+
+    @Autowired
+    private ArticleMapper articleMapper;
+
+    @Autowired
+    private AttachmentMapper attachmentMapper;
+
+    @Autowired
     private BoardRepository boardRepository;
 
     @Autowired
     private ThreadRepository threadRepository;
 
     @Autowired
+    private ArticleRepository articleRepository;
+
+    @Autowired
+    private OriginArticleInfoRepository originArticleInfoRepository;
+
+    @Autowired
     private MongoTemplate mongoTemplate;
+
+    private List<Article> getArticlesByThread(ThreadEntity oldthread, ObjectId boardid) {
+        ArrayList<Article> articles = new ArrayList<>();
+        List<ArticleEntity> oldarticles = articleMapper.getArticlesOnThread(oldthread.getThreadid());
+        if (oldarticles == null)
+            return null;
+        for (ArticleEntity oldarticle : oldarticles) {
+            String body = articleBodyMapper.get(oldarticle.getArticleid());
+            if (body == null) {
+                LOG.warn("Article {} havn't body", oldarticle.getArticleid());
+                body = "";
+            }
+            Article article = new Article();
+            article.setBoardid(boardid);
+            article.setAuthor(oldarticle.getAuthor());
+            article.setIsvisible(oldarticle.isIsvisible());
+            article.setPosttime(oldarticle.getPosttime());
+            article.setSubject(oldarticle.getSubject());
+            article.setBody(body);
+
+            List<AttachmentEntity> oldattachments = attachmentMapper.getByArticle(oldarticle.getArticleid());
+            if (oldattachments != null) {
+                for (AttachmentEntity oldattachment : oldattachments) {
+
+                }
+            }
+            //Can't save article to repository,because threadid is missing.
+        }
+        return articles;
+    }
 
     private org.kbs.archiver.model.Thread Convert(ThreadEntity oldthread,ObjectId boardid) {
         Thread thread = new Thread();
@@ -55,6 +102,8 @@ public class MigrateService {
             }
             boardid=newBoard.getBoardid();
         }
+
+        List<Article> articles = getArticlesByThread(oldthread, boardid);
         thread.setBoardid(boardid);
 //        thread.setArticlenumber(oldthread.getArticlenumber());
         thread.setAuthor(oldthread.getAuthor());
@@ -66,6 +115,11 @@ public class MigrateService {
         thread.setPosttime(oldthread.getPosttime());
         thread.setSubject(oldthread.getSubject());
         thread.setThreadid(null);
+
+        threadRepository.save(thread);
+        for (Article article : articles)
+            article.setThreadid(thread.getThreadid());
+        //TODO migrate articles
         return thread;
     }
 

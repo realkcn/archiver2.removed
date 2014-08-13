@@ -36,6 +36,18 @@ public class CacheStatistics {
         size = 0;
     }
 
+    public CacheStatistics(StatisticsGateway statistics) {
+        hitCount = statistics.cacheHitCount();
+        evictedCount = statistics.cacheEvictedCount();
+        expiredCount = statistics.cacheExpiredCount();
+        missCount = statistics.cacheMissCount();
+        missExpiredCount = statistics.cacheMissCount();
+        putCount = statistics.cachePutCount();
+        removeCount = statistics.cacheRemoveCount();
+        putUpdatedCount = statistics.cachePutUpdatedCount();
+        size = statistics.getSize();
+    }
+
     public synchronized void incHitCount() {
         hitCount++;
     }
@@ -64,24 +76,12 @@ public class CacheStatistics {
         putUpdatedCount++;
     }
 
-    public synchronized void setSize(long size) {
-        this.size = size;
-    }
-
-    public CacheStatistics(StatisticsGateway statistics) {
-        hitCount = statistics.cacheHitCount();
-        evictedCount = statistics.cacheEvictedCount();
-        expiredCount = statistics.cacheExpiredCount();
-        missCount = statistics.cacheMissCount();
-        missExpiredCount = statistics.cacheMissCount();
-        putCount = statistics.cachePutCount();
-        removeCount = statistics.cacheRemoveCount();
-        putUpdatedCount = statistics.cachePutUpdatedCount();
-        size = statistics.getSize();
-    }
-
     public long getSize() {
         return size;
+    }
+
+    public synchronized void setSize(long size) {
+        this.size = size;
     }
 
     public long getHitCount() {

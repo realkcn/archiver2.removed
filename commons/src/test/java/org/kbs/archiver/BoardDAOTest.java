@@ -24,9 +24,14 @@ import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:spring-test.xml"})
 public class BoardDAOTest {
+    @Autowired
+    org.quartz.Scheduler schedulerFactory;
+    @Autowired
+    org.quartz.JobDetail boardCacheExpireJob;
+    boolean stopRunning;
+    AtomicLong count = new AtomicLong(0);
     @Resource
     private BoardCache boardCache;
-
     @Resource
     private SetupData setupData;
 
@@ -91,26 +96,6 @@ public class BoardDAOTest {
 //                +  ((BoardCache) boardDAO).getStatistics().getMissCount(),6);
     }
 
-    @Autowired
-    org.quartz.Scheduler schedulerFactory;
-
-    @Autowired
-    org.quartz.JobDetail boardCacheExpireJob;
-
-    boolean stopRunning;
-
-    AtomicLong count = new AtomicLong(0);
-
-    public class Task implements Runnable {
-        @Override
-        public void run() {
-            while (!stopRunning) {
-                testSelectDao();
-                count.incrementAndGet();
-            }
-        }
-    }
-
     @Category({SlowTest.class})
     @Test
     public void testScheduleExpired() throws Exception {
@@ -160,6 +145,16 @@ public class BoardDAOTest {
         stopRunning = true;
         if (!executorService.awaitTermination(10, TimeUnit.SECONDS)) {
             System.out.print("Execute Time Out!");
+        }
+    }
+
+    public class Task implements Runnable {
+        @Override
+        public void run() {
+            while (!stopRunning) {
+                testSelectDao();
+                count.incrementAndGet();
+            }
         }
     }
 }

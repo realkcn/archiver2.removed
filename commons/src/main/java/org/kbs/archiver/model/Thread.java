@@ -18,26 +18,17 @@ import java.util.List;
         @CompoundIndex(name = "board_idx", def = "{'boardid':1,'lastposttime':-1}")
 })
 public class Thread {
+    List<ObjectId> articles;
     @Id
     private ObjectId threadid;
-
     private ObjectId boardid;
-
     private String subject;
-
     private Date posttime;
-
     private String author;
-
     private String lastreply;
-
     private Date lastposttime;
-
     private String encodingurl;
-
     private boolean isvisible = true;
-
-    List<ObjectId> articles;
 
     public List<ObjectId> getArticles() {
         return articles;

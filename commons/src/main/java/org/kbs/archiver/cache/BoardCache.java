@@ -23,6 +23,14 @@ import java.util.List;
 @Component
 public class BoardCache {
     private static final Logger LOG = LoggerFactory.getLogger(BoardCache.class);
+    private boolean caching = false;
+    @Autowired
+    private BoardRepository dbDAO;
+    private List<Board> boards;
+    private ArrayList<Board> visibleboardlist = new ArrayList<>();
+    private HashMap<ObjectId, Board> idMap = new HashMap<>();
+    private HashMap<String, Board> nameMap = new HashMap<>();
+    private CacheStatistics statistics = new CacheStatistics();
 
     /**
      * Get Board database DAO
@@ -42,19 +50,6 @@ public class BoardCache {
         this.dbDAO = dbDAO;
     }
 
-    private boolean caching = false;
-
-    @Autowired
-    private BoardRepository dbDAO;
-
-    private List<Board> boards;
-
-    private ArrayList<Board> visibleboardlist = new ArrayList<>();
-
-    private HashMap<ObjectId, Board> idMap = new HashMap<>();
-
-    private HashMap<String, Board> nameMap = new HashMap<>();
-
     /**
      * Get statistics of cache
      *
@@ -72,8 +67,6 @@ public class BoardCache {
     public void setStatistics(CacheStatistics statistics) {
         this.statistics = statistics;
     }
-
-    private CacheStatistics statistics = new CacheStatistics();
 
     /**
      * clear all cache and reload

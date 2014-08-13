@@ -80,10 +80,11 @@ public class SetupData {
         testBoard.setThreads(11744);
         boardCache.save(testBoard);
     }
+
     public void SetupThread() {
         LOG.info("setup thread collection...");
         mongoTemplate.dropCollection(Thread.class);
-        Thread newthread=new Thread();
+        Thread newthread = new Thread();
         newthread.setAuthor("faint");
         newthread.setEncodingurl("fdasfdas");
         newthread.setLastposttime(new Date());

@@ -16,27 +16,25 @@ import javax.annotation.Resource;
 @Scope("prototype")
 public class CacheUtils {
 
+    CacheStatistics saveStatistics;
     @Resource(name = "cacheManager")
     private EhCacheCacheManager cacheManager;
-
-    public Ehcache getCache() {
-        return cache;
-    }
-
-    public void setCache(Ehcache cache) {
-        this.cache = cache;
-    }
-
     private Ehcache cache;
-
-    CacheStatistics saveStatistics;
 
     public CacheUtils() {
 
     }
 
+    public Ehcache getCache() {
+        return cache;
+    }
+
     public void setCache(String cachename) {
         cache = ((EhCacheCache) cacheManager.getCache(cachename)).getNativeCache();
+    }
+
+    public void setCache(Ehcache cache) {
+        this.cache = cache;
     }
 
     public void saveStat() {

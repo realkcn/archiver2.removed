@@ -14,14 +14,16 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @SuppressWarnings("UnusedDeclaration")
 @Document
 @CompoundIndexes({
-        @CompoundIndex(name="origin_idx",def="{'boardid':1,'originid':1}"),
-        @CompoundIndex(name="originfile_idx",def="{'boardid':1,'filename':1}")
+        @CompoundIndex(name = "origin_idx", def = "{'boardid':1,'originid':1}"),
+        @CompoundIndex(name = "originfile_idx", def = "{'boardid':1,'filename':1}")
 })
 public class OriginArticleInfo {
     @Id
     private ObjectId articleid;
 
     private ObjectId boardid;
+
+    private ObjectId threadid;
 
     private long originid;
 
@@ -52,4 +54,29 @@ public class OriginArticleInfo {
     public void setReplyid(long replyid) {
         this.replyid = replyid;
     }
+
+    public ObjectId getArticleid() {
+        return articleid;
+    }
+
+    public void setArticleid(ObjectId articleid) {
+        this.articleid = articleid;
+    }
+
+    public ObjectId getBoardid() {
+        return boardid;
+    }
+
+    public void setBoardid(ObjectId boardid) {
+        this.boardid = boardid;
+    }
+
+    public ObjectId getThreadid() {
+        return threadid;
+    }
+
+    public void setThreadid(ObjectId threadid) {
+        this.threadid = threadid;
+    }
+
 }

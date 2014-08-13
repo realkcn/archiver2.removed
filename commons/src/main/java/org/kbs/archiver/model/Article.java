@@ -5,6 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by kcn on 14-6-17.
@@ -22,13 +23,11 @@ public class Article {
 
     private Date posttime;
 
-    private int attachment;
+    private List<String> attachments;
 
     private String subject;
 
     private boolean isvisible;
-
-    private int datasize;
 
     private String body;
 
@@ -72,12 +71,12 @@ public class Article {
         this.posttime = posttime;
     }
 
-    public int getAttachment() {
-        return attachment;
+    public List<String> getAttachments() {
+        return attachments;
     }
 
-    public void setAttachment(int attachment) {
-        this.attachment = attachment;
+    public void setAttachments(List<String> attachments) {
+        this.attachments = attachments;
     }
 
     public String getSubject() {
@@ -94,14 +93,6 @@ public class Article {
 
     public void setIsvisible(boolean isvisible) {
         this.isvisible = isvisible;
-    }
-
-    public int getDatasize() {
-        return datasize;
-    }
-
-    public void setDatasize(int datasize) {
-        this.datasize = datasize;
     }
 
     public String getBody() {

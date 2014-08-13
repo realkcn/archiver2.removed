@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+       xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="
           http://www.springframework.org/schema/data/mongo
           http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
@@ -45,5 +45,13 @@
         <constructor-arg name="mongoDbFactory" ref="mongoDbFactory"/>
         <constructor-arg name="mongoConverter" ref="mappingMongoConverter"/>
     </bean>
+    <bean id="gridFsTemplate"
+          class="org.springframework.data.mongodb.gridfs.GridFsTemplate">
+        <!--suppress SpringModelInspection -->
+        <constructor-arg name="dbFactory" ref="mongoDbFactory"/>
+        <constructor-arg name="converter" ref="mappingMongoConverter"/>
+    </bean>
     <mongo:repositories base-package="org.kbs.archiver.repositories"/>
+
+    <bean id="attachmentDAO" class="org.kbs.archiver.repositories.AttachmentDAOMongoImpl"/>
 </beans>
