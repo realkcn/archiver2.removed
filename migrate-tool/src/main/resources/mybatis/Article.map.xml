@@ -5,12 +5,12 @@
         select count(*) from article;
     </select>
 
-    <select id="selectAll" resultType="org.kbs.archiver.ArticleEntity">
+    <select id="selectAll" resultType="org.kbs.archiver.entity.ArticleEntity">
         select * from article order by
         articleid asc
     </select>
 
-    <insert id="insert" parameterType="org.kbs.archiver.ArticleEntity">
+    <insert id="insert" parameterType="org.kbs.archiver.entity.ArticleEntity">
         insert into
         article(threadid,boardid,articleid,subject,posttime,author,attachment,filename,isvisible,replyid,
         originid,encodingurl) values
@@ -23,7 +23,7 @@
         originid=#{originid},encodingurl=#{encodingurl}
     </insert>
 
-    <update id="update" parameterType="org.kbs.archiver.ArticleEntity">
+    <update id="update" parameterType="org.kbs.archiver.entity.ArticleEntity">
         UPDATE article set
         threadid=#{threadid},boardid=#{boardid},subject=#{subject},posttime=#{posttime},
         author=#{author},attachment=#{attachment},filename=#{filename},isvisible=#{isvisible},replyid=#{replyid},
@@ -47,13 +47,13 @@
         delete from article
         where boardid=#{boardid}
     </delete>
-    <select id="get" parameterType="long" resultType="org.kbs.archiver.ArticleEntity">
+    <select id="get" parameterType="long" resultType="org.kbs.archiver.entity.ArticleEntity">
         select
         article.*,board.cname boardname from article,board where
         articleid=#{articleid} and board.boardid=article.boardid and ishidden=false
     </select>
     <!-- articleid,author,posttime,attachment,subject,isvisible,encodingurl -->
-    <select id="getByThreadPerPage" resultType="org.kbs.archiver.ArticleEntity">
+    <select id="getByThreadPerPage" resultType="org.kbs.archiver.entity.ArticleEntity">
         SELECT article.*,articlebody.body FROM article,articlebody where
         article.threadid=#{threadid} and article.isvisible=true and
         article.articleid=articlebody.articleid
@@ -61,7 +61,7 @@
             ORDER BY article.posttime asc limit #{offset},#{limit}
         </if>
     </select>
-    <select id="getByAuthorPerPage" resultType="org.kbs.archiver.ArticleEntity">
+    <select id="getByAuthorPerPage" resultType="org.kbs.archiver.entity.ArticleEntity">
         SELECT article.*,articlebody.body,board.cname boardname FROM
         article,board,articlebody where
         article.author=#{author} and
@@ -81,17 +81,17 @@
         article.isvisible=true
     </select>
     <select id="getByOriginId" parameterType="long"
-            resultType="org.kbs.archiver.ArticleEntity">
+            resultType="org.kbs.archiver.entity.ArticleEntity">
         select * from article where boardid=#{boardid} and
         originid=#{originid}
         limit 1
     </select>
     <select id="getByEncodingUrl" parameterType="String"
-            resultType="org.kbs.archiver.ArticleEntity">
+            resultType="org.kbs.archiver.entity.ArticleEntity">
         select * from article where encodingurl=#{encodingurl} and isvisible=true
     </select>
     <select id="getArticlesOnThread" parameterType="long"
-            resultType="org.kbs.archiver.ArticleEntity">
+            resultType="org.kbs.archiver.entity.ArticleEntity">
         select * from article where articleid=#{articleid} and isvisible=true
     </select>
     <select id="getFilenamesByBoard" parameterType="long"

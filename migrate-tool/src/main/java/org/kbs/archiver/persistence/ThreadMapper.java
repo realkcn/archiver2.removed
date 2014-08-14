@@ -3,8 +3,7 @@ package org.kbs.archiver.persistence;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
-import org.kbs.archiver.ArticleEntity;
-import org.kbs.archiver.ThreadEntity;
+import org.kbs.archiver.entity.ThreadEntity;
 
 public interface ThreadMapper {
     public ThreadEntity get(long threadid);

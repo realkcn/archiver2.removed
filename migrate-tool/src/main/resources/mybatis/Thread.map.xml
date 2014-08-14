@@ -5,11 +5,11 @@
         select count(*) from thread;
     </select>
 
-    <select id="selectAll" resultType="org.kbs.archiver.ThreadEntity">
+    <select id="selectAll" resultType="org.kbs.archiver.entity.ThreadEntity">
         select * from thread order by threadid asc
     </select>
 
-    <insert id="insert" parameterType="org.kbs.archiver.ThreadEntity">
+    <insert id="insert" parameterType="org.kbs.archiver.entity.ThreadEntity">
         insert into
         thread(threadid,boardid,subject,posttime,articlenumber,author,lastreply,lastposttime,
         originid,encodingurl,isvisible) values
@@ -20,7 +20,7 @@
         author=#{author},lastreply=#{lastreply},lastposttime=#{lastposttime},originid=#{originid},encodingurl=#{encodingurl},isvisible=#{isvisible}
     </insert>
 
-    <update id="update" parameterType="org.kbs.archiver.ThreadEntity">
+    <update id="update" parameterType="org.kbs.archiver.entity.ThreadEntity">
         update thread set
         boardid=#{boardid},subject=#{subject},posttime=#{posttime},articlenumber=#{articlenumber},
         author=#{author},lastreply=#{lastreply},lastposttime=#{lastposttime},originid=#{originid},encodingurl=#{encodingurl},isvisible=#{isvisible}
@@ -39,23 +39,23 @@
     <delete id="deleteByBoard" parameterType="long">
         delete from thread where boardid=#{boardid}
     </delete>
-    <select id="get" parameterType="long" resultType="org.kbs.archiver.ThreadEntity">
+    <select id="get" parameterType="long" resultType="org.kbs.archiver.entity.ThreadEntity">
         select * from thread where threadid=#{threadid}
     </select>
-    <select id="getByBoardPerPage" resultType="org.kbs.archiver.ThreadEntity">
+    <select id="getByBoardPerPage" resultType="org.kbs.archiver.entity.ThreadEntity">
         SELECT * FROM thread where boardid=#{boardid} and isvisible=true ORDER BY lastposttime desc limit
         #{offset},#{limit}
     </select>
     <select id="getByOriginId" parameterType="long"
-            resultType="org.kbs.archiver.ThreadEntity">
+            resultType="org.kbs.archiver.entity.ThreadEntity">
         select * from thread where boardid=#{boardid} and originid=#{originid} limit 1
     </select>
     <select id="getByEncodingUrl" parameterType="String"
-            resultType="org.kbs.archiver.ThreadEntity">
+            resultType="org.kbs.archiver.entity.ThreadEntity">
         select * from thread where encodingurl=#{encodingurl} and isvisible=true
     </select>
     <select id="getThreadsOnBoard" parameterType="long"
-            resultType="org.kbs.archiver.ThreadEntity">
+            resultType="org.kbs.archiver.entity.ThreadEntity">
         select * from thread where boardid=#{boardid}
     </select>
     <select id="getByArticleURL" parameterType="String" resultType="String">

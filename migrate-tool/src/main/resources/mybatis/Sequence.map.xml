@@ -4,11 +4,11 @@
     <select id="select" resultType="long" parameterType="String">
         select value from sequence where name=#{name};
     </select>
-    <insert id="insert" parameterType="org.kbs.archiver.SequenceEntity">
+    <insert id="insert" parameterType="org.kbs.archiver.entity.SequenceEntity">
         insert into sequence(name,value) values(#{name},#{value})
     </insert>
 
-    <update id="update" parameterType="org.kbs.archiver.SequenceEntity">
+    <update id="update" parameterType="org.kbs.archiver.entity.SequenceEntity">
         update sequence set value=#{value} where name=#{name} and #{value}>value
     </update>
 </mapper>

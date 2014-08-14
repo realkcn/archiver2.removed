@@ -4,14 +4,14 @@
     <select id="getGroups" resultType="String" useCache="true">
         select groupid from board where ishidden=false Group by groupid
     </select>
-    <select id="getHotThreads" resultType="org.kbs.archiver.ThreadEntity" useCache="false">
+    <select id="getHotThreads" resultType="org.kbs.archiver.entity.ThreadEntity" useCache="false">
         select * from newestthread
         <if test="groupid!=null">
             where newestthread.groupid=#{groupid}
         </if>
         order by articlenumber desc limit #{count};
     </select>
-    <select id="getNewestThreads" resultType="org.kbs.archiver.ThreadEntity" useCache="false">
+    <select id="getNewestThreads" resultType="org.kbs.archiver.entity.ThreadEntity" useCache="false">
         select * from newestthread order by lastposttime desc limit #{count};
     </select>
     <insert id="insertNewestThread" timeout="600" flushCache="false">
@@ -31,7 +31,7 @@
     <delete id="deleteByid" flushCache="false">
         delete from newestthread where threadid=#{threadid};
     </delete>
-    <insert id="addThread" parameterType="org.kbs.archiver.ThreadEntity" flushCache="false">
+    <insert id="addThread" parameterType="org.kbs.archiver.entity.ThreadEntity" flushCache="false">
         insert into newestthread(threadid,boardid,subject,posttime,articlenumber,author,lastreply,lastposttime,
         originid,encodingurl,groupid,boardname) values
         (#{threadid},#{boardid},#{subject},#{posttime},#{articlenumber},#{author},
@@ -39,7 +39,7 @@
         ON DUPLICATE KEY UPDATE
         lastreply=#{lastreply},lastposttime=#{lastposttime},articlenumber=#{articlenumber}
     </insert>
-    <update id="updateThread" parameterType="org.kbs.archiver.ThreadEntity" flushCache="false">
+    <update id="updateThread" parameterType="org.kbs.archiver.entity.ThreadEntity" flushCache="false">
         update newestthread set
         lastreply=#{lastreply},lastposttime=#{lastposttime},articlenumber=#{articlenumber}
         where threadid=#{threadid}

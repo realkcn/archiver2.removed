@@ -3,8 +3,11 @@ package org.kbs.archiver;
  * Created by kcn on 14-8-11.
  */
 
-import com.sun.xml.internal.ws.api.message.Attachment;
 import org.bson.types.ObjectId;
+import org.kbs.archiver.entity.ArticleEntity;
+import org.kbs.archiver.entity.AttachmentEntity;
+import org.kbs.archiver.entity.BoardEntity;
+import org.kbs.archiver.entity.ThreadEntity;
 import org.kbs.archiver.model.*;
 import org.kbs.archiver.model.Thread;
 import org.kbs.archiver.persistence.*;
@@ -20,7 +23,6 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -146,7 +148,8 @@ public class MigrateService {
 
         mongoTemplate.insert(newthreads, Thread.class);
         long timespent=System.currentTimeMillis()-starttime;
-        LOG.info("Convert thread for board {} end.Toal time {}:{}",boardname,timespent/1000/60,timespent/1000%60);
+        LOG.info("Convert thread for board {} end.Toal time {}:{}", boardname, timespent / 1000 / 60,
+                timespent / 1000 % 60);
     }
 
     public void migrateBoardInfo(String boardname) throws SimpleException {

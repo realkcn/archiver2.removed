@@ -1,4 +1,4 @@
-package org.kbs.archiver;
+package org.kbs.archiver.dao;
 
 import org.junit.Before;
 import org.junit.Test;

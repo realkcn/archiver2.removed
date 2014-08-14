@@ -1,10 +1,8 @@
 package org.kbs.archiver.persistence;
 
 import org.apache.ibatis.annotations.Param;
-import org.kbs.archiver.ArticleEntity;
-import org.kbs.archiver.DeletedEntity;
+import org.kbs.archiver.entity.DeletedEntity;
 
-import java.util.Date;
 import java.util.List;
 
 /**

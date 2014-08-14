@@ -2,7 +2,7 @@ package org.kbs.archiver.persistence;
 
 import java.util.List;
 
-import org.kbs.archiver.BoardEntity;
+import org.kbs.archiver.entity.BoardEntity;
 
 public interface BoardMapper {
     public BoardEntity get(long boardid);

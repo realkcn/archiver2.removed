@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.kbs.archiver.persistence.AttachmentMapper">
-    <!-- <resultMap type="org.kbs.archiver.AttachmentEntity" id="attachmentMapper_resultMap_attachmentEntity">
+    <!-- <resultMap type="org.kbs.archiver.entity.AttachmentEntity" id="attachmentMapper_resultMap_attachmentEntity">
         <id property="name" column="name" javaType="String" jdbcType="VARCHAR" />
         <result property="data" column="data" javaType="byte[]" jdbcType="BLOB" typeHandler="org.apache.ibatis.type.BlobTypeHandler"
         /> <result property="articleid" column="articleid" javaType="Long" jdbcType="BIGINT"
@@ -13,7 +13,7 @@
         attachment;
     </select>
 
-    <insert id="insert" parameterType="org.kbs.archiver.AttachmentEntity">
+    <insert id="insert" parameterType="org.kbs.archiver.entity.AttachmentEntity">
         insert into
         attachment(name,attachmentid,articleid,attachmentorder,data,encodingurl,boardid)
         values
@@ -23,7 +23,7 @@
         data=#{data} ,boardid=#{boardid}
     </insert>
 
-    <update id="update" parameterType="org.kbs.archiver.AttachmentEntity">
+    <update id="update" parameterType="org.kbs.archiver.entity.AttachmentEntity">
         update attachment set
         name=#{name},articleid=#{articleid},attachmentorder=#{order},encodingurl=#{encodingurl}
         ,
@@ -44,7 +44,7 @@
         where articleid=#{articleid}
     </delete>
     <select id="get" parameterType="long"
-            resultType="org.kbs.archiver.AttachmentEntity">
+            resultType="org.kbs.archiver.entity.AttachmentEntity">
         select attachment.*,length(attachment.data) datasize from
         attachment,board,article where attachment.attachmentid=#{attachmentid}
         and attachment.articleid=article.articleid
@@ -53,7 +53,7 @@
         board.ishidden=false
     </select>
     <select id="getByEncodingUrl" parameterType="long"
-            resultType="org.kbs.archiver.AttachmentEntity">
+            resultType="org.kbs.archiver.entity.AttachmentEntity">
         select attachment.* from attachment,board,article where
         attachment.encodingurl=#{encodingurl} and
         attachment.articleid=article.articleid
@@ -62,7 +62,7 @@
         board.ishidden=false
     </select>
     <select id="getByArticle" parameterType="long"
-            resultType="org.kbs.archiver.AttachmentEntity">
+            resultType="org.kbs.archiver.entity.AttachmentEntity">
         select
         attachment.name,attachment.attachmentid,attachment.encodingurl,attachment.boardid,length(attachment.data)
         datasize

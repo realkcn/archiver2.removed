@@ -1,8 +1,7 @@
 package org.kbs.archiver.persistence;
 
 import org.apache.ibatis.annotations.Param;
-import org.kbs.archiver.ArticleEntity;
-import org.kbs.archiver.ThreadEntity;
+import org.kbs.archiver.entity.ThreadEntity;
 
 import java.util.List;
 

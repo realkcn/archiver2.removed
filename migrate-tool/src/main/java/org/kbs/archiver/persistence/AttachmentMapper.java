@@ -2,7 +2,7 @@ package org.kbs.archiver.persistence;
 
 import java.util.List;
 
-import org.kbs.archiver.AttachmentEntity;
+import org.kbs.archiver.entity.AttachmentEntity;
 
 public interface AttachmentMapper {
     public AttachmentEntity get(long attachmentid);

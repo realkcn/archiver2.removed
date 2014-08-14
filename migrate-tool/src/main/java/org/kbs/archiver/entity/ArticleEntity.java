@@ -1,9 +1,8 @@
-package org.kbs.archiver;
+package org.kbs.archiver.entity;
 
 import java.util.Date;
 import java.util.List;
 
-import org.kbs.library.AttachmentData;
 import org.kbs.library.FileHeaderInfo;
 
 public class ArticleEntity {

@@ -1,4 +1,4 @@
-package org.kbs.archiver;
+package org.kbs.archiver.entity;
 
 public class SequenceEntity {
     public SequenceEntity(String name, long value) {

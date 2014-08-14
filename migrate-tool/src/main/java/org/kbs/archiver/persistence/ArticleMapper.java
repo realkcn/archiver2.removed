@@ -3,7 +3,7 @@ package org.kbs.archiver.persistence;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
-import org.kbs.archiver.ArticleEntity;
+import org.kbs.archiver.entity.ArticleEntity;
 
 public interface ArticleMapper {
     public ArticleEntity get(long articleid);

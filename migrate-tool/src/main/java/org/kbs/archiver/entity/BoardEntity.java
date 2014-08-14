@@ -1,4 +1,4 @@
-package org.kbs.archiver;
+package org.kbs.archiver.entity;
 
 import org.kbs.library.BoardHeaderInfo;
 

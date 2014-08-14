@@ -1,4 +1,4 @@
-package org.kbs.archiver;/**
+package org.kbs.archiver.entity;/**
  * User: kcn
  * Date: 12-9-26
  * Time: 下午4:53
