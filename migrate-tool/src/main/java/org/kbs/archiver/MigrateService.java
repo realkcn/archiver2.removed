@@ -64,6 +64,16 @@ public class MigrateService {
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    private boolean force=false;
+
+    public boolean isForce() {
+        return force;
+    }
+
+    public void setForce(boolean force) {
+        this.force = force;
+    }
+
     private List<Article> getArticlesByThread(ThreadEntity oldthread, ObjectId boardid) {
         ArrayList<Article> articles = new ArrayList<>();
         List<ArticleEntity> oldarticles = articleMapper.getArticlesOnThread(oldthread.getThreadid());
@@ -118,9 +128,9 @@ public class MigrateService {
         thread.setSubject(oldthread.getSubject());
         thread.setThreadid(null);
 
-        threadRepository.save(thread);
-        for (Article article : articles)
-            article.setThreadid(thread.getThreadid());
+//        threadRepository.save(thread);
+//        for (Article article : articles)
+//            article.setThreadid(thread.getThreadid());
         //TODO migrate articles
         return thread;
     }
@@ -147,9 +157,10 @@ public class MigrateService {
         }
 
         mongoTemplate.insert(newthreads, Thread.class);
-        long timespent=System.currentTimeMillis()-starttime;
-        LOG.info("Convert thread for board {} end.Toal time {}:{}", boardname, timespent / 1000 / 60,
-                timespent / 1000 % 60);
+        long timespent=(System.currentTimeMillis()-starttime)/1000;
+        LOG.info("Convert thread for board {} end.Toal time {}:{}", boardname, timespent  / 60,
+                timespent  % 60);
+        LOG.info("Total threads: {} .Spped {} thread/sec", newthreads.size(), ((double)newthreads.size())/timespent);
     }
 
     public void migrateBoardInfo(String boardname) throws SimpleException {
@@ -168,18 +179,20 @@ public class MigrateService {
 
         Board oldboard = boardRepository.findByName(boardname);
         if (oldboard != null) {
-            System.out.println("版面" + boardname + "已经存在，是否需要迁移？(Y/n)");
-            try {
-                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-                String str = br.readLine();
-                if ((str.charAt(0) != 'y') && (str.charAt(0) != 'Y')) {
-                    System.out.println("停止迁移");
+            if (!isForce()) {
+                try {
+                    System.out.println("版面" + boardname + "已经存在，是否需要迁移？(Y/n)");
+                    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+                    String str = br.readLine();
+                    if ((str.charAt(0) != 'y') && (str.charAt(0) != 'Y')) {
+                        System.out.println("停止迁移");
+                        throw new SimpleException();
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
                     throw new SimpleException();
                 }
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                throw new SimpleException();
             }
             board.setBoardid(oldboard.getBoardid());
         }

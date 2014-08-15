@@ -23,7 +23,8 @@ public class MigrateTool {
 
         Options options = new Options();
         options.addOption("h", "help", false, "print help for the command.");
-        options.addOption("a", "all", false, "Migrate all automatic.");
+        options.addOption("a", "all", false, "migrate all automatic.");
+        options.addOption("f", "force", false, "force confirm.");
         options.addOption(OptionBuilder.withArgName("board")
                 .hasArg()
                 .withDescription("Migrate the board by name.")
@@ -41,6 +42,9 @@ public class MigrateTool {
             formatter.printHelp(formatstr, options); // 如果发生异常，则打印出帮助信息
         }
 
+        if (cl.hasOption('f')) {
+            service.setForce(true);
+        }
         if (cl.hasOption('a')) {
             service.migrateAll();
         } else if (cl.hasOption('b')) {
