@@ -1,6 +1,8 @@
 package org.kbs.archiver.repositories;
 
+import com.mongodb.DBObject;
 import com.mongodb.gridfs.GridFSDBFile;
+import com.mongodb.gridfs.GridFSFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -33,6 +35,12 @@ public class AttachmentDAOMongoImpl implements AttachmentDAO {
     @Override
     public void put(String id, InputStream data) {
         gridFsTemplate.store(data, id);
+    }
+
+    @Override
+    public String put(InputStream data) {
+        GridFSFile file=gridFsTemplate.store(data, (DBObject) null);
+        return file.getId().toString();
     }
 
     @Override

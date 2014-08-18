@@ -11,6 +11,8 @@ public interface AttachmentDAO {
 
     void put(String id, InputStream data);
 
+    String put(InputStream data);
+
     void delete(String id);
 
     void clear();

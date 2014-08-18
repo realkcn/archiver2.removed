@@ -4,6 +4,7 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
@@ -18,7 +19,6 @@ import java.util.List;
         @CompoundIndex(name = "board_idx", def = "{'boardid':1,'lastposttime':-1}")
 })
 public class Thread {
-    List<ObjectId> articles;
     @Id
     private ObjectId threadid;
     private ObjectId boardid;
@@ -30,19 +30,22 @@ public class Thread {
     private String encodingurl;
     private boolean isvisible = true;
 
-    public List<ObjectId> getArticles() {
+    @DBRef(lazy = true)
+    List<Article> articles=new ArrayList<>();
+
+    public List<Article> getArticles() {
         return articles;
     }
 
-    public void setArticles(List<ObjectId> articles) {
+    public void setArticles(List<Article> articles) {
         this.articles = articles;
     }
 
-    public void addArticle(ObjectId articleid) {
+    public void addArticle(Article articleid) {
         this.articles.add(articleid);
     }
 
-    public void removeArticle(ObjectId articleid) {
+    public void removeArticle(Article articleid) {
         this.articles.remove(articleid);
     }
 

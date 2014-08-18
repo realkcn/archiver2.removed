@@ -152,5 +152,6 @@
     </bean>
     <mongo:repositories base-package="org.kbs.archiver.repositories"/>
 
+    <bean id="attachmentDAO" class="org.kbs.archiver.repositories.AttachmentDAOMongoImpl" />
     <bean id="migrateService" class="org.kbs.archiver.MigrateService"/>
 </beans>

@@ -11,10 +11,7 @@ import org.kbs.archiver.entity.ThreadEntity;
 import org.kbs.archiver.model.*;
 import org.kbs.archiver.model.Thread;
 import org.kbs.archiver.persistence.*;
-import org.kbs.archiver.repositories.ArticleRepository;
-import org.kbs.archiver.repositories.BoardRepository;
-import org.kbs.archiver.repositories.OriginArticleInfoRepository;
-import org.kbs.archiver.repositories.ThreadRepository;
+import org.kbs.archiver.repositories.*;
 import org.kbs.library.SimpleException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +22,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -62,6 +60,9 @@ public class MigrateService {
     private OriginArticleInfoRepository originArticleInfoRepository;
 
     @Autowired
+    private AttachmentDAO attachmentDAO;
+
+    @Autowired
     private MongoTemplate mongoTemplate;
 
     private boolean force=false;
@@ -96,7 +97,7 @@ public class MigrateService {
             List<AttachmentEntity> oldattachments = attachmentMapper.getByArticle(oldarticle.getArticleid());
             if (oldattachments != null) {
                 for (AttachmentEntity oldattachment : oldattachments) {
-
+                    String attachmentid=attachmentDAO.put(new ByteArrayInputStream(oldattachment.getData()));
                 }
             }
             //Can't save article to repository,because threadid is missing.
