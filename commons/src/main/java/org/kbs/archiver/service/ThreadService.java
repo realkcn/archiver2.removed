@@ -89,21 +89,24 @@ public class ThreadService {
     }
 
     synchronized public void  batchExecute() {
-        mongoTemplate.insert(threads,Thread.class);
         int index=0;
         int lastpos=0;
+        for (int i=0;i<articlesList.size();i++) {
+            ObjectId articleid=new ObjectId();
+            articlesList.get(i).setArticleid(articleid);
+            articleInfosList.get(i).setArticleid(articleid);
+        }
         for (Thread thread:threads) {
+            thread.setThreadid(new ObjectId());
             for (int i=lastpos;i<articlepos.get(index);i++) {
                 articlesList.get(i).setThreadid(thread.getThreadid());
                 articleInfosList.get(i).setThreadid(thread.getThreadid());
+                thread.addArticle(articlesList.get(i));
             }
         }
 
+        mongoTemplate.insert(threads,Thread.class);
         mongoTemplate.insert(articlesList,Article.class);
-        for (int i=0;i<articlesList.size();i++) {
-            articleInfosList.get(i).setArticleid(articlesList.get(i).getArticleid());
-        }
-
         mongoTemplate.insert(articleInfosList,OriginArticleInfo.class);
         for (int i=0;i<articlesList.size();i++) {
             articleInfosList.set(i,null);
