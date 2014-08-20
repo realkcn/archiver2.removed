@@ -12,13 +12,16 @@ import org.kbs.archiver.model.*;
 import org.kbs.archiver.model.Thread;
 import org.kbs.archiver.persistence.*;
 import org.kbs.archiver.repositories.*;
+import org.kbs.archiver.service.ThreadService;
 import org.kbs.library.SimpleException;
+import org.kbs.library.TwoObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
@@ -26,6 +29,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Component("migrateService")
@@ -65,6 +69,9 @@ public class MigrateService {
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    @Autowired
+    private ThreadService threadService;
+
     private boolean force=false;
 
     public boolean isForce() {
@@ -75,9 +82,12 @@ public class MigrateService {
         this.force = force;
     }
 
-    private List<Article> getArticlesByThread(ThreadEntity oldthread, ObjectId boardid) {
+    private TwoObject<ArrayList<Article>,ArrayList<OriginArticleInfo>> getArticlesByThread(ThreadEntity oldthread, ObjectId boardid) {
         ArrayList<Article> articles = new ArrayList<>();
+        ArrayList<OriginArticleInfo> originArticleInfos= new ArrayList<>();
+
         List<ArticleEntity> oldarticles = articleMapper.getArticlesOnThread(oldthread.getThreadid());
+
         if (oldarticles == null)
             return null;
         for (ArticleEntity oldarticle : oldarticles) {
@@ -93,16 +103,38 @@ public class MigrateService {
             article.setPosttime(oldarticle.getPosttime());
             article.setSubject(oldarticle.getSubject());
             article.setBody(body);
+//            article.setThreadid(threadid);
+
+            OriginArticleInfo articleInfo=new OriginArticleInfo();
+            articleInfo.setBoardid(boardid);
+            articleInfo.setFilename(oldarticle.getFilename());
+            articleInfo.setOriginid(oldarticle.getOriginid());
+            articleInfo.setReplyid(oldarticle.getReplyid());
+//            articleInfo.setThreadid(threadid);
+
+            articles.add(article);
+            originArticleInfos.add(articleInfo);
 
             List<AttachmentEntity> oldattachments = attachmentMapper.getByArticle(oldarticle.getArticleid());
             if (oldattachments != null) {
                 for (AttachmentEntity oldattachment : oldattachments) {
-                    String attachmentid=attachmentDAO.put(new ByteArrayInputStream(oldattachment.getData()));
+
+                    byte [] data=attachmentMapper.get(oldattachment.getAttachmentid()).getData();
+                    if (data==null)
+                        LOG.warn("Attachement {} data is null.",oldattachment.getAttachmentid());
+                    String attachmentid=attachmentDAO.put(new ByteArrayInputStream(data));
+                    Attachment attachment=new Attachment();
+                    attachment.setAttachmentid(attachmentid);
+                    attachment.setName(oldattachment.getName());
+                    attachment.setDatasize(oldattachment.getDatasize());
+                    article.addAttachment(attachment);
                 }
             }
             //Can't save article to repository,because threadid is missing.
         }
-        return articles;
+//        mongoTemplate.insert(articles,Article.class);
+//        mongoTemplate.insert(originArticleInfos,OriginArticleInfo.class);
+        return new TwoObject<>(articles,originArticleInfos);
     }
 
     private org.kbs.archiver.model.Thread Convert(ThreadEntity oldthread,ObjectId boardid) {
@@ -116,7 +148,6 @@ public class MigrateService {
             boardid=newBoard.getBoardid();
         }
 
-        List<Article> articles = getArticlesByThread(oldthread, boardid);
         thread.setBoardid(boardid);
 //        thread.setArticlenumber(oldthread.getArticlenumber());
         thread.setAuthor(oldthread.getAuthor());
@@ -129,10 +160,20 @@ public class MigrateService {
         thread.setSubject(oldthread.getSubject());
         thread.setThreadid(null);
 
+        TwoObject<ArrayList<Article>,ArrayList<OriginArticleInfo>> returnobj=getArticlesByThread(oldthread, boardid);
+        ArrayList<Article> articles = returnobj.getFirst();
+        ArrayList<OriginArticleInfo> originArticleInfos = returnobj.getSecond();
+
+
 //        threadRepository.save(thread);
 //        for (Article article : articles)
 //            article.setThreadid(thread.getThreadid());
         //TODO migrate articles
+        try {
+            threadService.batchInsert(thread,articles,originArticleInfos);
+        } catch (SimpleException e) {
+            LOG.error("insert thread error:"+thread.getThreadid().toString(),e);
+        }
         return thread;
     }
 
@@ -141,7 +182,6 @@ public class MigrateService {
 
         BoardEntity boardEntity = boardMapper.getByName(boardname);
         List<ThreadEntity> oldthreads = threadMapper.getThreadsOnBoard(boardEntity.getBoardid());
-        List<Thread> newthreads = new ArrayList<>();
         Board board = boardRepository.findByName(boardname);
         if (board == null) {
             LOG.error("Can't find board:" + boardname + ",migrate board first.");
@@ -152,16 +192,20 @@ public class MigrateService {
             mongoTemplate.createCollection(Thread.class);
         } else
             mongoTemplate.remove(new Query(Criteria.where("boardid").is(board.getBoardid())),Thread.class);
+
+        int ticket=0;
+        Date date=new Date();
         for (ThreadEntity oldthread : oldthreads) {
+
             Thread thread = Convert(oldthread,board.getBoardid());
-            newthreads.add(thread);
+            ticket++;
         }
 
-        mongoTemplate.insert(newthreads, Thread.class);
+        threadService.batchExecute();
         long timespent=(System.currentTimeMillis()-starttime)/1000;
         LOG.info("Convert thread for board {} end.Toal time {}:{}", boardname, timespent  / 60,
                 timespent  % 60);
-        LOG.info("Total threads: {} .Spped {} thread/sec", newthreads.size(), ((double)newthreads.size())/timespent);
+        LOG.info("Total threads: {} .Spped {} thread/sec", ticket, ((double)ticket)/timespent);
     }
 
     public void migrateBoardInfo(String boardname) throws SimpleException {

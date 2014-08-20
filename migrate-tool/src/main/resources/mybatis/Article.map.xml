@@ -92,7 +92,7 @@
     </select>
     <select id="getArticlesOnThread" parameterType="long"
             resultType="org.kbs.archiver.entity.ArticleEntity">
-        select * from article where articleid=#{articleid} and isvisible=true
+        select * from article where threadid=#{threadid} and isvisible=true ORDER BY article.posttime asc
     </select>
     <select id="getFilenamesByBoard" parameterType="long"
             resultType="String">

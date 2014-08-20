@@ -4,6 +4,7 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class Article {
 
     private Date posttime;
 
-    private List<String> attachments;
+    private List<Attachment> attachments=new ArrayList<>();
 
     private String subject;
 
@@ -71,11 +72,17 @@ public class Article {
         this.posttime = posttime;
     }
 
-    public List<String> getAttachments() {
+    public List<Attachment> getAttachments() {
         return attachments;
     }
 
-    public void setAttachments(List<String> attachments) {
+    public void addAttachment(Attachment attachment) {
+//        if (attachments==null)
+//            setAttachments(new ArrayList<Attachment>());
+        attachments.add(attachment);
+    }
+
+    public void setAttachments(List<Attachment> attachments) {
         this.attachments = attachments;
     }
 
