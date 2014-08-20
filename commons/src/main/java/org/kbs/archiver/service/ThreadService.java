@@ -23,6 +23,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @SuppressWarnings("UnusedDeclaration")
@@ -105,6 +106,7 @@ public class ThreadService {
             }
         }
 
+        long start=System.currentTimeMillis();
         mongoTemplate.insert(threads,Thread.class);
         mongoTemplate.insert(articlesList,Article.class);
         mongoTemplate.insert(articleInfosList,OriginArticleInfo.class);
@@ -116,8 +118,8 @@ public class ThreadService {
         for (int i=0;i<threads.size();i++) {
             threads.set(i,null);
         }
-
-        LOG.info("batch insert {} threads, {} articles.",threads.size(),articlesList.size());
+        long spenttime=System.currentTimeMillis()-start;
+        LOG.info("batch insert {} second for {} threads, {} articles.",spenttime/1000, threads.size(),articlesList.size());
         articlesList.clear();
         articleInfosList.clear();
         threads.clear();
