@@ -3,6 +3,7 @@ package org.kbs.archiver.repositories;
 import com.mongodb.DBObject;
 import com.mongodb.gridfs.GridFSDBFile;
 import com.mongodb.gridfs.GridFSFile;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
 
+import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.gridfs.GridFsCriteria.whereFilename;
 
 /**
@@ -26,7 +28,7 @@ public class AttachmentDAOMongoImpl implements AttachmentDAO {
     @Override
     public InputStream get(String id) {
         GridFSDBFile file = gridFsTemplate.findOne(
-                Query.query(whereFilename().is(id)));
+                new Query(where("_id").is(new ObjectId(id))));
         if (file != null)
             return file.getInputStream();
         return null;
@@ -34,7 +36,7 @@ public class AttachmentDAOMongoImpl implements AttachmentDAO {
 
     @Override
     public void put(String id, InputStream data) {
-        gridFsTemplate.store(data, id);
+        gridFsTemplate.store(data, new ObjectId(id));
     }
 
     @Override
@@ -45,11 +47,11 @@ public class AttachmentDAOMongoImpl implements AttachmentDAO {
 
     @Override
     public void delete(String id) {
-        gridFsTemplate.delete(Query.query(whereFilename().is(id)));
+        gridFsTemplate.delete(new Query(where("_id").is(new ObjectId(id))));
     }
 
     @Override
     public void clear() {
-        gridFsTemplate.delete(Query.query(Criteria.where("")));
+        gridFsTemplate.delete(Query.query(where("")));
     }
 }
