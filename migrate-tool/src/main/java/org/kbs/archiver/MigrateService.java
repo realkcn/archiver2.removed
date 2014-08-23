@@ -22,7 +22,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
@@ -30,7 +29,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Component("migrateService")
@@ -54,15 +52,6 @@ public class MigrateService {
 
     @Autowired
     private BoardRepository boardRepository;
-
-    @Autowired
-    private ThreadRepository threadRepository;
-
-    @Autowired
-    private ArticleRepository articleRepository;
-
-    @Autowired
-    private OriginArticleInfoRepository originArticleInfoRepository;
 
     @Autowired
     private AttachmentDAO attachmentDAO;
@@ -189,10 +178,6 @@ public class MigrateService {
                 EncodingURLMapping.Type.THREAD,oldthread.getEncodingurl(),threadid);
 
         oldUrlMappingService.batchAdd(encodingURLMapping);
-//        threadRepository.save(thread);
-//        for (Article article : articles)
-//            article.setThreadid(thread.getThreadid());
-        //TODO migrate articles
         try {
             threadService.batchInsert(thread,articles,originArticleInfos);
         } catch (SimpleException e) {
@@ -218,10 +203,9 @@ public class MigrateService {
             mongoTemplate.remove(new Query(Criteria.where("boardid").is(board.getBoardid())),Thread.class);
 
         int ticket=0;
-        Date date=new Date();
         for (ThreadEntity oldthread : oldthreads) {
 
-            Thread thread = Convert(oldthread,board.getBoardid());
+            Convert(oldthread,board.getBoardid());
             ticket++;
         }
 
