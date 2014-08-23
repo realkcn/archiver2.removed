@@ -230,7 +230,7 @@ public class MigrateService {
         long timespent=(System.currentTimeMillis()-starttime)/1000;
         LOG.info("Convert thread for board {} end.Toal time {}:{}", boardname, timespent  / 60,
                 timespent  % 60);
-        LOG.info("Total threads: {} .Spped {} thread/sec", ticket, ((double)ticket)/timespent);
+        LOG.info("Total threads: {} .Speed {} thread/sec", ticket, ((double)ticket)/timespent);
     }
 
     public void migrateBoardInfo(String boardname) throws SimpleException {
