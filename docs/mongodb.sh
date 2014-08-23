@@ -133,6 +133,17 @@ stop
 SECUREOPTION=${SAVESECUREOPTION}
 }
 
+dropall() {
+mongo --port 30000 <<EOF
+use archiver
+db.article.remove({})
+db.thread.remove({})
+db.encodingURLMapping.remove({})
+db.originArticleInfo.remove({})
+db.fs.chunks.remove({})
+db.fs.files.remove({})
+EOF
+}
 case "$1" in
   restart)
 	stop

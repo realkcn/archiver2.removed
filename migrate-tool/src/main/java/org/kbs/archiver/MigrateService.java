@@ -12,6 +12,7 @@ import org.kbs.archiver.model.*;
 import org.kbs.archiver.model.Thread;
 import org.kbs.archiver.persistence.*;
 import org.kbs.archiver.repositories.*;
+import org.kbs.archiver.service.OldUrlMappingService;
 import org.kbs.archiver.service.ThreadService;
 import org.kbs.library.SimpleException;
 import org.kbs.library.TwoObject;
@@ -72,6 +73,9 @@ public class MigrateService {
     @Autowired
     private ThreadService threadService;
 
+    @Autowired
+    private OldUrlMappingService oldUrlMappingService;
+
     private boolean force=false;
 
     public boolean isForce() {
@@ -82,7 +86,8 @@ public class MigrateService {
         this.force = force;
     }
 
-    private TwoObject<ArrayList<Article>,ArrayList<OriginArticleInfo>> getArticlesByThread(ThreadEntity oldthread, ObjectId boardid) {
+    private TwoObject<ArrayList<Article>,ArrayList<OriginArticleInfo>> getArticlesByThread(ThreadEntity oldthread,
+            ObjectId boardid, ObjectId threadid) {
         ArrayList<Article> articles = new ArrayList<>();
         ArrayList<OriginArticleInfo> originArticleInfos= new ArrayList<>();
 
@@ -96,6 +101,7 @@ public class MigrateService {
                 LOG.warn("Article {} havn't body", oldarticle.getArticleid());
                 body = "";
             }
+            ObjectId articleid=new ObjectId();
             Article article = new Article();
             article.setBoardid(boardid);
             article.setAuthor(oldarticle.getAuthor());
@@ -103,17 +109,24 @@ public class MigrateService {
             article.setPosttime(oldarticle.getPosttime());
             article.setSubject(oldarticle.getSubject());
             article.setBody(body);
-//            article.setThreadid(threadid);
+            article.setArticleid(articleid);
+            article.setThreadid(threadid);
 
             OriginArticleInfo articleInfo=new OriginArticleInfo();
             articleInfo.setBoardid(boardid);
             articleInfo.setFilename(oldarticle.getFilename());
             articleInfo.setOriginid(oldarticle.getOriginid());
             articleInfo.setReplyid(oldarticle.getReplyid());
-//            articleInfo.setThreadid(threadid);
+            articleInfo.setArticleid(articleid);
+            articleInfo.setThreadid(threadid);
 
             articles.add(article);
             originArticleInfos.add(articleInfo);
+
+            EncodingURLMapping encodingURLMapping=new EncodingURLMapping(
+                    EncodingURLMapping.Type.ARTICLE,oldarticle.getEncodingurl(),articleid);
+
+            oldUrlMappingService.batchAdd(encodingURLMapping);
 
             List<AttachmentEntity> oldattachments = attachmentMapper.getByArticle(oldarticle.getArticleid());
             if (oldattachments != null) {
@@ -128,6 +141,10 @@ public class MigrateService {
                     attachment.setName(oldattachment.getName());
                     attachment.setDatasize(oldattachment.getDatasize());
                     article.addAttachment(attachment);
+                    encodingURLMapping=new EncodingURLMapping(
+                            EncodingURLMapping.Type.ATTACHMENT,oldattachment.getEncodingurl(),attachmentid);
+
+                    oldUrlMappingService.batchAdd(encodingURLMapping);
                 }
             }
             //Can't save article to repository,because threadid is missing.
@@ -148,8 +165,9 @@ public class MigrateService {
             boardid=newBoard.getBoardid();
         }
 
+        ObjectId threadid=new ObjectId();
         thread.setBoardid(boardid);
-//        thread.setArticlenumber(oldthread.getArticlenumber());
+//        thread.set(oldthread.getArticlenumber());
         thread.setAuthor(oldthread.getAuthor());
         thread.setEncodingurl(oldthread.getEncodingurl());
         thread.setIsvisible(oldthread.isIsvisible());
@@ -159,12 +177,18 @@ public class MigrateService {
         thread.setPosttime(oldthread.getPosttime());
         thread.setSubject(oldthread.getSubject());
         thread.setThreadid(null);
+        thread.setThreadid(threadid);
 
-        TwoObject<ArrayList<Article>,ArrayList<OriginArticleInfo>> returnobj=getArticlesByThread(oldthread, boardid);
+        TwoObject<ArrayList<Article>,ArrayList<OriginArticleInfo>> returnobj=
+                getArticlesByThread(oldthread, boardid, threadid);
         ArrayList<Article> articles = returnobj.getFirst();
         ArrayList<OriginArticleInfo> originArticleInfos = returnobj.getSecond();
 
 
+        EncodingURLMapping encodingURLMapping=new EncodingURLMapping(
+                EncodingURLMapping.Type.THREAD,oldthread.getEncodingurl(),threadid);
+
+        oldUrlMappingService.batchAdd(encodingURLMapping);
 //        threadRepository.save(thread);
 //        for (Article article : articles)
 //            article.setThreadid(thread.getThreadid());
@@ -202,6 +226,7 @@ public class MigrateService {
         }
 
         threadService.batchExecute();
+        oldUrlMappingService.batchExecute();
         long timespent=(System.currentTimeMillis()-starttime)/1000;
         LOG.info("Convert thread for board {} end.Toal time {}:{}", boardname, timespent  / 60,
                 timespent  % 60);

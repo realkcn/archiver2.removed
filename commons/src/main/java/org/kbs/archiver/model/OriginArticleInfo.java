@@ -11,10 +11,13 @@ import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Date;
+
 @SuppressWarnings("UnusedDeclaration")
 @Document
 @CompoundIndexes({
-        @CompoundIndex(name = "origin_idx", def = "{'boardid':1,'originid':1}"),
+//        @CompoundIndex(name = "origin_idx", def = "{'boardid':1,'originid':1}"),
+        @CompoundIndex(name = "origin_idx", def = "{'boardid':1,'posttime':1}"),
         @CompoundIndex(name = "originfile_idx", def = "{'boardid':1,'filename':1}")
 })
 public class OriginArticleInfo {
@@ -28,6 +31,8 @@ public class OriginArticleInfo {
     private long originid;
 
     private String filename;
+
+    private Date posttime;
 
     private long replyid;
 

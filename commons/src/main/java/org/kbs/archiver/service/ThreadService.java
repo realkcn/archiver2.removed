@@ -74,7 +74,6 @@ public class ThreadService {
     private ArrayList<OriginArticleInfo> articleInfosList=new ArrayList<>();
     private ArrayList<Integer> articlepos=new ArrayList<>();
 
-    private int articlecount;
     synchronized public void batchInsert(Thread thread,List<Article> articles,List<OriginArticleInfo> articleInfos)
             throws SimpleException {
         if (articles.size()!=articleInfos.size()) {
@@ -83,7 +82,7 @@ public class ThreadService {
         threads.add(thread);
         articlesList.addAll(articles);
         articleInfosList.addAll(articleInfos);
-        int pos=articles.size();
+        int pos=articlesList.size();
         articlepos.add(pos);
         if (pos>maxArticleQueue)
             batchExecute();
@@ -92,11 +91,6 @@ public class ThreadService {
     synchronized public void  batchExecute() {
         int index=0;
         int lastpos=0;
-        for (int i=0;i<articlesList.size();i++) {
-            ObjectId articleid=new ObjectId();
-            articlesList.get(i).setArticleid(articleid);
-            articleInfosList.get(i).setArticleid(articleid);
-        }
         for (Thread thread:threads) {
             thread.setThreadid(new ObjectId());
             for (int i=lastpos;i<articlepos.get(index);i++) {
