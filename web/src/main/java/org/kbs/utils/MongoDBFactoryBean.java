@@ -1,4 +1,5 @@
-package org.kbs.utils;/**
+package org.kbs.utils;
+/**
  * User: kcn
  * Date: 14-8-6
  * Time: 下午5:40

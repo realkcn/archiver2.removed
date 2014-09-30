@@ -11,6 +11,7 @@
         <module>migrate-tool</module>
         <module>web</module>
         <module>commons</module>
+        <module>archiver-tool</module>
     </modules>
     <packaging>pom</packaging>
     <name>NewSMTH Archiver Webapp</name>
