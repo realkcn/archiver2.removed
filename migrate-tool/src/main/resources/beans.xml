@@ -13,9 +13,7 @@
         <property name="ignoreResourceNotFound" value="true"/>
         <property name="locations">
             <list>
-                <value>classpath:archiver.properties</value>
                 <value>classpath:archiver.conf</value>
-                <value>classpath:archiver.local.conf</value>
                 <value>file:/etc/archiver.conf</value>
             </list>
         </property>

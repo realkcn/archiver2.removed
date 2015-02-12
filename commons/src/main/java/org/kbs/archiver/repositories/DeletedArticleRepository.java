@@ -1,6 +1,6 @@
 package org.kbs.archiver.repositories;
 
-import org.kbs.archiver.model.Article;
+import org.kbs.archiver.model.DeletedArticle;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public interface ArticleRepository extends PagingAndSortingRepository<Article, String> {
+public interface DeletedArticleRepository extends PagingAndSortingRepository<DeletedArticle, String> {
 }

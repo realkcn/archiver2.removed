@@ -14,7 +14,7 @@
         <module>archiver-tool</module>
     </modules>
     <packaging>pom</packaging>
-    <name>NewSMTH Archiver Webapp</name>
+    <name>NewSMTH Archiver</name>
     <prerequisites>
         <maven>3.0</maven>
     </prerequisites>

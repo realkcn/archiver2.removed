@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.kbs.archiver.model.Thread;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -32,6 +33,7 @@ public class ThreadService {
     private static final Logger LOG = LoggerFactory.getLogger(ThreadService.class);
 
     @Autowired
+    @Qualifier("threadRepository")
     private ThreadRepository threadRepository;
 
     @Autowired
